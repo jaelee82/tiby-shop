@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOVE ME ME — TIBY Hair Perfume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --dark: #111111;
+      --accent: #F4A0A0;
+      --accent-dim: rgba(244,160,160,0.12);
+      --accent-mid: rgba(244,160,160,0.3);
+      --white: #f5f0ee;
+      --white-dim: rgba(245,240,238,0.55);
+      --white-faint: rgba(245,240,238,0.07);
+      --hug: #7EC8B5;
+      --kiss: #A78BBF;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--white); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed; width: 32px; height: 32px;
+      border: 1px solid rgba(245,240,238,0.4); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: all .15s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; letter-spacing: 6px; color: var(--white); text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--white-dim); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+
+    /* STICKY BAR */
+    .sticky-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(244,160,160,0.2);
+      padding: 14px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .sticky-product { display: flex; align-items: center; gap: 16px; }
+    .sticky-product-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+    .sticky-product-name { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); }
+    .sticky-product-price { font-size: 12px; letter-spacing: 2px; color: var(--white-dim); }
+    .sticky-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-sticky-buy {
+      background: var(--accent); color: #1a0a0a;
+      border: none; padding: 10px 28px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-sticky-buy:hover { background: #fff; }
+    .btn-sticky-quiz, .btn-sticky-layer {
+      background: transparent; color: var(--white-dim);
+      border: 1px solid rgba(245,240,238,0.2); padding: 10px 20px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-sticky-quiz:hover, .btn-sticky-layer:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      position: relative; height: 100vh; display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 50%, rgba(244,160,160,0.08) 0%, transparent 60%);
+    }
+    .hero-img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.22; filter: saturate(0.5) brightness(0.8);
+    }
+    .hero-content {
+      position: relative; z-index: 2; max-width: 620px; padding: 0 80px;
+    }
+    .hero-tag {
+      font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px; display: block;
+    }
+    .hero-hook {
+      font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300;
+      font-size: clamp(28px, 4vw, 48px); line-height: 1.6;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .hero-hook em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 13px; line-height: 1.9; color: var(--white-dim);
+      margin-bottom: 40px; max-width: 480px;
+    }
+    .hero-product-float {
+      position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+      z-index: 3;
+    }
+    .hero-product-float img {
+      height: clamp(300px, 45vh, 520px);
+      filter: drop-shadow(0 30px 60px rgba(244,160,160,0.25));
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-16px); }
+    }
+
+    /* SECTIONS */
+    section { padding: 100px 80px; }
+    .section-label {
+      font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300; line-height: 1.2; margin-bottom: 24px;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-body {
+      font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300;
+      font-size: 14px; line-height: 2.0; color: var(--white-dim); max-width: 560px;
+    }
+
+    /* PROBLEM SECTION */
+    .section-problem {
+      background: var(--dark);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .problem-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .problem-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300;
+      font-size: 14px; line-height: 1.8; color: var(--white-dim);
+      padding: 20px; border: 1px solid var(--white-faint);
+      background: rgba(244,160,160,0.03);
+    }
+    .problem-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .problem-em { color: var(--white); }
+
+    /* SOLUTION */
+    .section-solution {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .solution-img-wrap { position: relative; }
+    .solution-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .solution-badge {
+      position: absolute; bottom: 32px; left: -24px;
+      background: var(--black); border: 1px solid var(--accent);
+      padding: 20px 24px;
+    }
+    .solution-badge-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300;
+      color: var(--accent); line-height: 1;
+    }
+    .solution-badge-text {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--white-dim); margin-top: 4px;
+    }
+
+    /* PRODUCT DETAIL */
+    .section-product { background: var(--dark); }
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .product-images { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .product-images img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .product-images img:first-child { grid-column: span 2; aspect-ratio: 3/2; }
+    .product-info { position: sticky; top: 100px; }
+    .product-name-jp {
+      font-family: 'Zen Maru Gothic', sans-serif; font-size: 12px; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .product-name-en {
+      font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .product-price { font-size: 28px; letter-spacing: 2px; color: var(--accent); margin-bottom: 32px; }
+    .product-price span { font-size: 12px; color: var(--white-dim); margin-left: 8px; }
+    .product-concept {
+      font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300;
+      font-size: 13px; line-height: 2.0; color: var(--white-dim);
+      border-left: 2px solid var(--accent); padding-left: 20px; margin-bottom: 32px;
+    }
+    .notes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+    .note-card {
+      padding: 20px 16px; border: 1px solid var(--white-faint);
+      background: var(--accent-dim); text-align: center;
+    }
+    .note-label { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+    .note-items { font-family: 'Zen Maru Gothic', sans-serif; font-size: 11px; line-height: 1.8; color: var(--white-dim); }
+    .btn-buy {
+      display: block; width: 100%; background: var(--accent); color: #1a0a0a;
+      border: none; padding: 18px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s; margin-bottom: 12px; text-align: center; text-decoration: none;
+    }
+    .btn-buy:hover { background: #fff; }
+    .btn-secondary {
+      display: block; width: 100%; background: transparent; color: var(--white-dim);
+      border: 1px solid rgba(245,240,238,0.2); padding: 16px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s; text-align: center; text-decoration: none;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .product-meta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .meta-row {
+      display: flex; justify-content: space-between;
+      font-size: 10px; letter-spacing: 1px; padding: 10px 0;
+      border-bottom: 1px solid var(--white-faint); color: var(--white-dim);
+    }
+    .meta-row strong { color: var(--white); font-weight: 400; }
+
+    /* DIFFERENTIATOR */
+    .section-diff { }
+    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+    .diff-card {
+      padding: 40px 32px; background: var(--dark);
+      border-top: 2px solid transparent; transition: border-color .3s;
+    }
+    .diff-card:hover { border-color: var(--accent); }
+    .diff-num { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 300; color: var(--accent-mid); line-height: 1; margin-bottom: 16px; }
+    .diff-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); margin-bottom: 12px; }
+    .diff-body { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.9; color: var(--white-dim); }
+
+    /* SCENES */
+    .section-scenes { background: var(--dark); }
+    .scenes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 60px; }
+    .scene-card {
+      position: relative; overflow: hidden; aspect-ratio: 4/3; cursor: pointer;
+    }
+    .scene-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.23,1,0.32,1);
+      filter: saturate(0.7);
+    }
+    .scene-card:hover img { transform: scale(1.04); filter: saturate(1); }
+    .scene-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
+      padding: 32px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .scene-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; font-style: italic; color: var(--white); margin-bottom: 6px; }
+    .scene-sub { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--white-dim); }
+
+    /* REVIEWS */
+    .section-reviews { }
+    .reviews-marquee { overflow: hidden; margin-top: 60px; }
+    .reviews-track { display: flex; gap: 24px; animation: marquee-reviews 30s linear infinite; }
+    @keyframes marquee-reviews {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .review-card {
+      flex-shrink: 0; width: 340px; padding: 32px;
+      background: var(--dark); border: 1px solid var(--white-faint);
+    }
+    .review-stars { color: var(--accent); font-size: 12px; letter-spacing: 4px; margin-bottom: 16px; }
+    .review-text { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.9; color: var(--white-dim); margin-bottom: 16px; }
+    .review-author { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--white-dim); }
+
+    /* INGREDIENTS */
+    .section-ingredients { background: var(--dark); }
+    .ingredients-wrap { margin-top: 40px; }
+    .ingredient-group { margin-bottom: 24px; }
+    .ingredient-group-title { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .ingredient-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ingredient-tag {
+      font-size: 10px; letter-spacing: 1px; padding: 6px 14px;
+      border: 1px solid var(--white-faint); color: var(--white-dim);
+    }
+    .ingredient-full {
+      font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300;
+      font-size: 11px; line-height: 2.0; color: var(--white-faint); margin-top: 24px;
+    }
+    .ingredient-notice {
+      font-size: 10px; line-height: 1.8; color: rgba(245,240,238,0.3);
+      margin-top: 16px; padding: 16px; border: 1px solid var(--white-faint);
+    }
+
+    /* CTA FINAL */
+    .section-cta {
+      text-align: center; padding: 140px 80px;
+      background: radial-gradient(ellipse at center, rgba(244,160,160,0.06) 0%, transparent 70%);
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 80px);
+      font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 40px;
+    }
+    .cta-title em { font-style: normal; color: var(--accent); }
+    .cta-btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-primary {
+      background: var(--accent); color: #1a0a0a; border: none;
+      padding: 20px 56px; font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s; text-decoration: none;
+    }
+    .btn-cta-primary:hover { background: #fff; }
+    .btn-cta-secondary {
+      background: transparent; color: var(--white-dim);
+      border: 1px solid rgba(245,240,238,0.25); padding: 20px 40px;
+      font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s; text-decoration: none;
+    }
+    .btn-cta-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* OTHER PRODUCTS */
+    .section-other { background: var(--dark); }
+    .other-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 60px; }
+    .other-card {
+      position: relative; padding: 48px 40px; overflow: hidden;
+      transition: background .3s; cursor: pointer; text-decoration: none; display: block;
+    }
+    .other-card.hug { background: rgba(126,200,181,0.05); border: 1px solid rgba(126,200,181,0.15); }
+    .other-card.kiss { background: rgba(167,139,191,0.05); border: 1px solid rgba(167,139,191,0.15); }
+    .other-card:hover.hug { background: rgba(126,200,181,0.1); }
+    .other-card:hover.kiss { background: rgba(167,139,191,0.1); }
+    .other-card-name { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+    .other-card.hug .other-card-name { color: var(--hug); }
+    .other-card.kiss .other-card-name { color: var(--kiss); }
+    .other-card-desc { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.8; color: var(--white-dim); max-width: 280px; }
+    .other-card-arrow { position: absolute; bottom: 32px; right: 32px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--white-dim); }
+
+    /* FOOTER */
+    footer {
+      padding: 48px 80px; border-top: 1px solid var(--white-faint);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; letter-spacing: 6px; color: var(--white-dim); }
+    .footer-info { font-size: 9px; letter-spacing: 2px; color: rgba(245,240,238,0.25); text-align: right; line-height: 1.8; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .hero-content { padding: 0 24px; }
+      .hero-product-float { display: none; }
+      .section-problem, .section-solution, .product-grid { grid-template-columns: 1fr; gap: 40px; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .scenes-grid { grid-template-columns: 1fr; }
+      .other-grid { grid-template-columns: 1fr; }
+      .sticky-bar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+      .btn-sticky-quiz, .btn-sticky-layer { display: none; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+      .footer-info { text-align: center; }
+      .section-cta { padding: 80px 24px; }
+      .notes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">TIBY</a>
+  <ul class="nav-links">
+    <li><a href="/#products">Products</a></li>
+    <li><a href="https://tiby.me/stores" target="_blank">Stores</a></li>
+    <li><a href="https://tiby.me/quiz" target="_blank">Quiz</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: 문제 제기 -->
+<section class="hero">
+  <img class="hero-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_lovememe_hairperfume_03_hero.jpg" alt="">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-tag">TIBY — LOVE ME ME</span>
+    <h1 class="hero-hook">
+      髪のニオイ、<br>
+      誰かに気づかれて<br>
+      <em>いませんか？</em>
+    </h1>
+    <p class="hero-sub">
+      せっかくのコーデも、香水も。<br>
+      髪の印象ひとつで、すべてが変わる。<br>
+      TIBYは、すれ違う瞬間に残る——<br>
+      ヘア専用の香りです。
+    </p>
+  </div>
+  <div class="hero-product-float">
+    <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_pink_front1_1.png" alt="LOVE ME ME">
+  </div>
+</section>
+
+<!-- PROBLEM: 공감 -->
+<section class="section-problem reveal">
+  <div>
+    <span class="section-label">The Problem</span>
+    <h2 class="section-title">こんな経験、<br><em>ありませんか？</em></h2>
+    <p class="section-body">
+      香水をつけても、気づいたら<br>
+      髪からのニオイが気になる……
+    </p>
+  </div>
+  <ul class="problem-list">
+    <li class="problem-item">
+      <span class="problem-icon">💭</span>
+      <span><span class="problem-em">「電車でふわっと香りが漂ったとき」</span><br>自分の髪からとは言えなかった</span>
+    </li>
+    <li class="problem-item">
+      <span class="problem-icon">💭</span>
+      <span><span class="problem-em">「普通の香水は重すぎて」</span><br>髪につけるのをためらってしまう</span>
+    </li>
+    <li class="problem-item">
+      <span class="problem-icon">💭</span>
+      <span><span class="problem-em">「夕方になると</span>髪のニオイが気になって<br>自信が持てなくなる」</span>
+    </li>
+  </ul>
+</section>
+
+<!-- SOLUTION: 해결 제안 -->
+<section class="section-solution reveal">
+  <div class="solution-img-wrap">
+    <img class="solution-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_lovememe_hairperfume_12_hero.jpg" alt="TIBY LOVE ME ME">
+    <div class="solution-badge">
+      <div class="solution-badge-num">6</div>
+      <div class="solution-badge-text">Plant Extracts</div>
+    </div>
+  </div>
+  <div>
+    <span class="section-label">The Solution</span>
+    <h2 class="section-title">だから、<br><em>ヘア専用の</em><br>香りが必要。</h2>
+    <p class="section-body">
+      TIBYは髪のために設計された香水ミスト。<br><br>
+      アルコールベースで軽くまとわりつかない処方に、
+      6種の植物エキスを配合。<br><br>
+      顔から15〜25cm離してスプレーするだけで、
+      动く度にふわりと漂うやさしい残り香。
+    </p>
+  </div>
+</section>
+
+<!-- PRODUCT DETAIL: 제품 소개 -->
+<section class="section-product reveal">
+  <div class="product-grid">
+    <div class="product-images">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_lovememe_hairperfume_04_hero.jpg" alt="LOVE ME ME">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_pink_front1_1.png" alt="LOVE ME ME bottle" style="object-fit:contain; background: rgba(244,160,160,0.05);">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_pink_side_2.png" alt="LOVE ME ME side" style="object-fit:contain; background: rgba(244,160,160,0.05);">
+    </div>
+    <div class="product-info">
+      <p class="product-name-jp">ラブ ミーミー</p>
+      <h2 class="product-name-en">LOVE ME ME</h2>
+      <p class="product-price">¥999 <span>税込 / 30ml</span></p>
+      <p class="product-concept">
+        ビターオレンジのきらめきから、<br>
+        ジャスミン・ピーチ・ローズのロマンティックなブーケへ。<br>
+        アンバーのやさしい余韻が長く漂います。
+      </p>
+      <div class="notes-grid">
+        <div class="note-card">
+          <span class="note-label">Top Note</span>
+          <div class="note-items">BERGAMOT<br>ORANGE<br>PEACH</div>
+        </div>
+        <div class="note-card">
+          <span class="note-label">Mid Note</span>
+          <div class="note-items">ORCHID<br>ROSE<br>JASMIN<br>LILY</div>
+        </div>
+        <div class="note-card">
+          <span class="note-label">Base Note</span>
+          <div class="note-items">MUSK<br>AMBER</div>
+        </div>
+      </div>
+      <a href="#" class="btn-buy" onclick="alert('KG이니시스 결제 연결 예정'); return false;">
+        今すぐ購入する — ¥999
+      </a>
+      <a href="https://tiby.me/quiz" target="_blank" class="btn-secondary">
+        🌸 あなたに合う香りを診断する
+      </a>
+      <div class="product-meta">
+        <div class="meta-row"><span>内容量</span><strong>30ml / 1.01 FL.OZ.</strong></div>
+        <div class="meta-row"><span>フレグランス系統</span><strong>FRESH FLORAL MUSK AMBER</strong></div>
+        <div class="meta-row"><span>原産国</span><strong>韓国製</strong></div>
+        <div class="meta-row"><span>販売元</span><strong>ONEMAKE合同会社（大阪）</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS: 차별성 -->
+<section class="section-diff reveal">
+  <span class="section-label">Why TIBY</span>
+  <h2 class="section-title">香水との<br><em>ちがい。</em></h2>
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-num">01</div>
+      <div class="diff-title">ヘア専用処方</div>
+      <div class="diff-body">通常の香水と異なり、髪への密着を考えたアルコールベース処方。重さや油分がなく、さらりとした使い心地。</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-num">02</div>
+      <div class="diff-title">6種の植物エキス</div>
+      <div class="diff-body">ラベンダー・フリージア・カミツレなど6種の天然植物エキスを配合。髪をやさしく包み込みます。</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-num">03</div>
+      <div class="diff-title">¥999 の気軽さ</div>
+      <div class="diff-body">毎日使えるプライスで、3本揃えて気分やシーンで使い分けも。ドン・キホーテ全国219店舗で購入可能。</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENES: 사용 상황 -->
+<section class="section-scenes reveal">
+  <span class="section-label">Every Scene</span>
+  <h2 class="section-title">どんな日も、<br><em>あなたらしく。</em></h2>
+  <div class="scenes-grid">
+    <div class="scene-card">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/love-me-me-scene-date_1.png" alt="Date">
+      <div class="scene-overlay">
+        <div class="scene-title">デートの前に</div>
+        <div class="scene-sub">すれ違う瞬間の、ズルい残り香</div>
+      </div>
+    </div>
+    <div class="scene-card">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_lovememe_hairperfume_10_usage.jpg" alt="Usage">
+      <div class="scene-overlay">
+        <div class="scene-title">外出前の仕上げに</div>
+        <div class="scene-sub">15〜25cm離してシュッと一吹き</div>
+      </div>
+    </div>
+    <div class="scene-card">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/love-me-me-scene-campus.png" alt="Campus">
+      <div class="scene-overlay">
+        <div class="scene-title">キャンパスでも</div>
+        <div class="scene-sub">さりげなく漂う、やさしい香り</div>
+      </div>
+    </div>
+    <div class="scene-card">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/love-me-me-scene-weekend.png" alt="Weekend">
+      <div class="scene-overlay">
+        <div class="scene-title">お出かけの日に</div>
+        <div class="scene-sub">鞄に入れて、いつでも使える</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section-reviews reveal">
+  <span class="section-label">Real Reviews</span>
+  <h2 class="section-title">使った人の、<br><em>声。</em></h2>
+  <div class="reviews-marquee">
+    <div class="reviews-track">
+      <!-- set 1 -->
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「香水は重いと感じていたけど、これは軽くてちょうどいい。朝つけると夕方までふわっと感じます」</div>
+        <div class="review-author">@yuki___ · 20代 / 東京</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「¥999なのに香りがしっかりしていて驚いた。ドンキで見つけてからリピートしてます」</div>
+        <div class="review-author">@hana.s · 20代 / 大阪</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <div class="review-text">「彼氏に『なんかいい匂いする』って言われた！髪専用って初めて使ったけど全然違う」</div>
+        <div class="review-author">@miho.__ · 20代 / 神奈川</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「スプレーが細かくて使いやすい。ピーチとローズの混ざり方が絶妙で毎朝のルーティンになってます」</div>
+        <div class="review-author">@rin.__ · 20代 / 愛知</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「3本全部買った！シーンで使い分けてます。コスパ最高すぎる」</div>
+        <div class="review-author">@saki.m · 20代 / 福岡</div>
+      </div>
+      <!-- set 2 (duplicate for seamless loop) -->
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「香水は重いと感じていたけど、これは軽くてちょうどいい。朝つけると夕方までふわっと感じます」</div>
+        <div class="review-author">@yuki___ · 20代 / 東京</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「¥999なのに香りがしっかりしていて驚いた。ドンキで見つけてからリピートしてます」</div>
+        <div class="review-author">@hana.s · 20代 / 大阪</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <div class="review-text">「彼氏に『なんかいい匂いする』って言われた！髪専用って初めて使ったけど全然違う」</div>
+        <div class="review-author">@miho.__ · 20代 / 神奈川</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「スプレーが細かくて使いやすい。ピーチとローズの混ざり方が絶妙で毎朝のルーティンになってます」</div>
+        <div class="review-author">@rin.__ · 20代 / 愛知</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">「3本全部買った！シーンで使い分けてます。コスパ最高すぎる」</div>
+        <div class="review-author">@saki.m · 20代 / 福岡</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="section-ingredients reveal">
+  <span class="section-label">Ingredients</span>
+  <h2 class="section-title">成分<em>情報</em></h2>
+  <div class="ingredients-wrap">
+    <div class="ingredient-group">
+      <div class="ingredient-group-title">植物エキス成分</div>
+      <div class="ingredient-tags">
+        <span class="ingredient-tag">ラベンダー花エキス</span>
+        <span class="ingredient-tag">タイマツバナ葉エキス</span>
+        <span class="ingredient-tag">セイヨウハッカ葉エキス</span>
+        <span class="ingredient-tag">フリージアエキス</span>
+        <span class="ingredient-tag">カミツレ花エキス</span>
+        <span class="ingredient-tag">ローズマリー葉エキス</span>
+      </div>
+    </div>
+    <div class="ingredient-group">
+      <div class="ingredient-group-title">フレグランス特有成分</div>
+      <div class="ingredient-tags">
+        <span class="ingredient-tag">シトロネロール</span>
+        <span class="ingredient-tag">リモネン</span>
+        <span class="ingredient-tag">ゲラニオール</span>
+        <span class="ingredient-tag">リナロール</span>
+      </div>
+    </div>
+    <div class="ingredient-full">
+      全成分：エタノール、水、ＤＰＧ、クエン酸トリエチル、メトキシケイヒ酸エチルヘキシル、ＢＧ、ラベンダー花エキス、タイマツバナ葉エキス、セイヨウハッカ葉エキス、フリージアエキス、カミツレ花エキス、ローズマリー葉エキス、１，２－ヘキサンジオール、エチルヘキシルグリセリン、香料、シトロネロール、リモネン、ゲラニオール、リナロール
+    </div>
+    <div class="ingredient-notice">
+      ※ご使用前にパッチテストをおすすめします。お肌に異常が生じた場合は使用を中止し、皮膚科医にご相談ください。
+      ※顔を避けて、15～25cm離して髪にスプレーしてください。
+      ※お子様の手の届かない場所に保管してください。
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL: 구매 유도 -->
+<section class="section-cta reveal">
+  <h2 class="cta-title">
+    香水が<em>決めすぎるけど、</em><br>
+    これはズルい。
+  </h2>
+  <div class="cta-btn-group">
+    <a href="#" class="btn-cta-primary" onclick="alert('KG이니시스 결제 연결 예정'); return false;">
+      LOVE ME ME を購入する — ¥999
+    </a>
+    <a href="https://tiby.me/quiz" target="_blank" class="btn-cta-secondary">
+      香りを診断する
+    </a>
+    <a href="https://tiby.me/layering" target="_blank" class="btn-cta-secondary">
+      レイヤリングガイド
+    </a>
+  </div>
+</section>
+
+<!-- OTHER PRODUCTS -->
+<section class="section-other reveal">
+  <span class="section-label">Also Available</span>
+  <h2 class="section-title">他の<em>香り</em></h2>
+  <div class="other-grid">
+    <a href="/hug-me-me" class="other-card hug">
+      <div class="other-card-name">HUG ME ME</div>
+      <p class="other-card-desc">シトラス＆ムスク。甘くやさしく包み込まれる香り。</p>
+      <span class="other-card-arrow">詳しく見る →</span>
+    </a>
+    <a href="/kiss-me-me" class="other-card kiss">
+      <div class="other-card-name">KISS ME ME</div>
+      <p class="other-card-desc">アップル＆フローラル。フルーティーで可憐な香り。</p>
+      <span class="other-card-arrow">詳しく見る →</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TIBY</div>
+  <div class="footer-info">
+    販売元：ONEMAKE合同会社 / 大阪市生野区小路2-7-2 / TEL: 06-7167-8742<br>
+    製造国：韓国 / 企画：Giant Korea Co., Ltd.<br>
+    © 2026 TIBY. All rights reserved.
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <div class="sticky-product">
+    <div class="sticky-product-dot"></div>
+    <span class="sticky-product-name">LOVE ME ME</span>
+    <span class="sticky-product-price">¥999</span>
+  </div>
+  <div class="sticky-actions">
+    <a href="https://tiby.me/quiz" target="_blank" class="btn-sticky-quiz">🌸 香り診断</a>
+    <a href="https://tiby.me/layering" target="_blank" class="btn-sticky-layer">✨ レイヤリング</a>
+    <button class="btn-sticky-buy" onclick="alert('KG이니시스 결제 연결 예정')">今すぐ購入 →</button>
+  </div>
+</div>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>

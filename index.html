@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIBY — Hair Perfume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-black: #111111;
+      --dark: #161616;
+      --love: #F4A0A0;
+      --love-dim: rgba(244,160,160,0.15);
+      --hug: #7EC8B5;
+      --hug-dim: rgba(126,200,181,0.15);
+      --kiss: #A78BBF;
+      --kiss-dim: rgba(167,139,191,0.15);
+      --white: #f5f0ee;
+      --white-dim: rgba(245,240,238,0.5);
+      --white-faint: rgba(245,240,238,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,240,238,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s cubic-bezier(0.23,1,0.32,1),
+                  height 0.4s cubic-bezier(0.23,1,0.32,1),
+                  border-color 0.3s;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+      mix-blend-mode: difference;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 22px;
+      letter-spacing: 6px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 60%, rgba(244,160,160,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 75% 30%, rgba(167,139,191,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(126,200,181,0.04) 0%, transparent 60%);
+    }
+
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .hero-line-top {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,240,238,0.06), transparent);
+      transform: translateY(-80px);
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(36px, 5.5vw, 80px);
+      line-height: 1.25;
+      text-align: center;
+      letter-spacing: 1px;
+      max-width: 820px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s 0.6s forwards;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--love) 0%, var(--kiss) 50%, var(--hug) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--white-dim);
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 1s 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.3);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(245,240,238,0.3), transparent);
+      animation: scrollPulse 2s 2s infinite;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 120px 48px; }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.3);
+      margin-bottom: 16px;
+    }
+
+    /* ── PRODUCTS ── */
+    #products {
+      background: var(--off-black);
+      padding: 120px 48px;
+    }
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 72px;
+      border-bottom: 1px solid var(--white-faint);
+      padding-bottom: 32px;
+    }
+    .products-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(32px, 3.5vw, 52px);
+      letter-spacing: 1px;
+    }
+    .products-note {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--white-dim);
+      max-width: 240px;
+      text-align: right;
+      line-height: 1.8;
+      font-family: 'Zen Maru Gothic', sans-serif;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      padding: 56px 40px;
+      overflow: hidden;
+      cursor: none;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card:hover::before { opacity: 1; }
+
+    .card-love { background: rgba(244,160,160,0.04); }
+    .card-love::before { background: radial-gradient(ellipse at 50% 0%, rgba(244,160,160,0.12), transparent 70%); }
+    .card-love .card-accent { color: var(--love); }
+    .card-love .card-btn { border-color: var(--love); color: var(--love); }
+    .card-love .card-btn:hover { background: var(--love); color: var(--black); }
+    .card-love .card-number { color: rgba(244,160,160,0.15); }
+
+    .card-hug { background: rgba(126,200,181,0.04); }
+    .card-hug::before { background: radial-gradient(ellipse at 50% 0%, rgba(126,200,181,0.12), transparent 70%); }
+    .card-hug .card-accent { color: var(--hug); }
+    .card-hug .card-btn { border-color: var(--hug); color: var(--hug); }
+    .card-hug .card-btn:hover { background: var(--hug); color: var(--black); }
+    .card-hug .card-number { color: rgba(126,200,181,0.15); }
+
+    .card-kiss { background: rgba(167,139,191,0.04); }
+    .card-kiss::before { background: radial-gradient(ellipse at 50% 0%, rgba(167,139,191,0.12), transparent 70%); }
+    .card-kiss .card-accent { color: var(--kiss); }
+    .card-kiss .card-btn { border-color: var(--kiss); color: var(--kiss); }
+    .card-kiss .card-btn:hover { background: var(--kiss); color: var(--black); }
+    .card-kiss .card-number { color: rgba(167,139,191,0.15); }
+
+    .card-number {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      transition: opacity 0.3s;
+    }
+
+    .card-accent {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 36px;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .card-tagline {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+      color: var(--white-dim);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .card-notes {
+      margin-bottom: 40px;
+      border-top: 1px solid var(--white-faint);
+      padding-top: 24px;
+    }
+    .card-note-row {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .note-label {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.25);
+      width: 36px;
+      flex-shrink: 0;
+    }
+    .note-val {
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: var(--white-dim);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .card-price span {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--white-dim);
+      display: block;
+      font-family: 'Josefin Sans', sans-serif;
+      margin-top: 2px;
+    }
+
+    .card-btn {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 1px solid;
+      background: transparent;
+      cursor: none;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* ── BRAND STORY ── */
+    #story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+      min-height: 70vh;
+    }
+
+    .story-visual {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .story-visual-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .story-bottles {
+      display: flex;
+      gap: 32px;
+      align-items: flex-end;
+    }
+    .bottle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .bottle-shape {
+      width: 60px;
+      position: relative;
+    }
+    .bottle-body {
+      width: 60px;
+      border-radius: 8px 8px 4px 4px;
+    }
+    .bottle-cap {
+      width: 24px;
+      height: 16px;
+      border-radius: 4px 4px 0 0;
+      margin: 0 auto;
+    }
+    .b-love .bottle-body { background: linear-gradient(160deg, rgba(244,160,160,0.9), rgba(220,120,120,0.7)); height: 120px; }
+    .b-love .bottle-cap { background: rgba(244,160,160,0.6); }
+    .b-hug .bottle-body { background: linear-gradient(160deg, rgba(126,200,181,0.9), rgba(90,170,150,0.7)); height: 100px; }
+    .b-hug .bottle-cap { background: rgba(126,200,181,0.6); }
+    .b-kiss .bottle-body { background: linear-gradient(160deg, rgba(167,139,191,0.9), rgba(130,100,160,0.7)); height: 110px; }
+    .b-kiss .bottle-cap { background: rgba(167,139,191,0.6); }
+
+    /* ── PRODUCT IMAGES ── */
+    .product-img {
+      width: 100%;
+      height: 320px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      margin-bottom: 32px;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), filter 0.5s;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+    }
+    .product-card:hover .product-img {
+      transform: translateY(-8px) scale(1.03);
+      filter: drop-shadow(0 32px 48px rgba(0,0,0,0.5));
+    }
+
+    /* ── HERO IMAGE ── */
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.18;
+      filter: saturate(0.4) brightness(0.7);
+    }
+    .bottle-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+
+    .story-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,10,10,0.3), transparent, rgba(10,10,10,0.5));
+    }
+
+    .story-content {
+      padding: 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--off-black);
+    }
+
+    .story-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 2.5vw, 42px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      color: var(--white);
+    }
+
+    .story-body {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 13px;
+      line-height: 2;
+      color: var(--white-dim);
+      margin-bottom: 48px;
+    }
+
+    .story-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,240,238,0.2);
+      padding-bottom: 8px;
+      transition: gap 0.3s, border-color 0.3s;
+    }
+    .story-link:hover { gap: 24px; border-color: rgba(245,240,238,0.6); }
+
+    /* ── WHERE TO BUY ── */
+    #where {
+      background: var(--black);
+      padding: 120px 48px;
+      text-align: center;
+    }
+
+    .where-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 4vw, 64px);
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .where-sub {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 13px;
+      color: var(--white-dim);
+      line-height: 2;
+      margin-bottom: 72px;
+    }
+
+    .where-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      max-width: 800px;
+      margin: 0 auto 72px;
+    }
+
+    .where-card {
+      padding: 56px 40px;
+      background: var(--off-black);
+      text-align: left;
+      transition: background 0.3s;
+    }
+    .where-card:hover { background: var(--dark); }
+
+    .where-card-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .where-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .where-card-desc {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+      color: var(--white-dim);
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .where-card-link {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,240,238,0.15);
+      padding-bottom: 4px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .where-card-link:hover { color: var(--white); border-color: rgba(245,240,238,0.5); }
+
+    .where-quiz-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 48px;
+      border: 1px solid rgba(245,240,238,0.15);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .where-quiz-cta:hover {
+      border-color: rgba(245,240,238,0.4);
+      background: var(--white-faint);
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--white-faint);
+      border-bottom: 1px solid var(--white-faint);
+      padding: 20px 0;
+      background: var(--off-black);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(245,240,238,0.2);
+      flex-shrink: 0;
+    }
+    .marquee-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(245,240,238,0.2);
+      margin: 0 32px;
+      vertical-align: middle;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 80px 48px 48px;
+      background: var(--black);
+      border-top: 1px solid var(--white-faint);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 64px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 6px;
+      color: var(--white);
+    }
+    .footer-tagline {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 11px;
+      color: rgba(245,240,238,0.3);
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 48px;
+    }
+    .footer-col h4 {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.3);
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 12px;
+      color: var(--white-dim);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--white-faint);
+    }
+    .footer-copy {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: rgba(245,240,238,0.2);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-legal a {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: rgba(245,240,238,0.2);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-legal a:hover { color: var(--white-dim); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.2); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1),
+                  transform 0.8s cubic-bezier(0.23,1,0.32,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      #products { padding: 80px 24px; }
+      .products-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .products-note { text-align: left; }
+      .products-grid { grid-template-columns: 1fr; }
+      #story { grid-template-columns: 1fr; }
+      .story-visual { min-height: 300px; }
+      .story-content { padding: 48px 24px; }
+      .where-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 40px; }
+      .footer-links { flex-direction: column; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" style="display:flex;align-items:center;">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_logo_pink_transparent.png" 
+           alt="TIBY" style="height:28px; width:auto; filter:brightness(10);">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#story">About</a></li>
+      <li><a href="https://tiby.me/stores" target="_blank">Stores</a></li>
+      <li><a href="https://tiby.me" target="_blank">Quiz</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <img class="hero-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/Tiby_target.png?v=1773742093" alt="" style="object-position: center center;">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-line-top"></div>
+
+    <p class="hero-eyebrow">Hair Perfume — ¥999</p>
+    <h1 class="hero-title">
+      香水が決めすぎるけど、<br><em>これはズルい。</em>
+    </h1>
+    <p class="hero-sub">LOVE ME ME &nbsp;·&nbsp; HUG ME ME &nbsp;·&nbsp; KISS ME ME</p>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">すれ違った瞬間の、ズルい残り香</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Hair Perfume</span><span class="marquee-dot"></span>
+      <span class="marquee-item">全国ドン・キホーテ約250店舗</span><span class="marquee-dot"></span>
+      <span class="marquee-item">¥999 — 30ml</span><span class="marquee-dot"></span>
+      <span class="marquee-item">近づいたとき、気づいてほしい香り</span><span class="marquee-dot"></span>
+      <span class="marquee-item">TIBY</span><span class="marquee-dot"></span>
+      <!-- duplicate for seamless -->
+      <span class="marquee-item">すれ違った瞬間の、ズルい残り香</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Hair Perfume</span><span class="marquee-dot"></span>
+      <span class="marquee-item">全国ドン・キホーテ約250店舗</span><span class="marquee-dot"></span>
+      <span class="marquee-item">¥999 — 30ml</span><span class="marquee-dot"></span>
+      <span class="marquee-item">近づいたとき、気づいてほしい香り</span><span class="marquee-dot"></span>
+      <span class="marquee-item">TIBY</span><span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="products-header reveal">
+      <div>
+        <p class="section-label">Collection</p>
+        <h2 class="products-title">3つの香り、<br>3つの自分。</h2>
+      </div>
+      <p class="products-note">香水ほどキメすぎない、<br>髪から自然に香るヘアミスト。</p>
+    </div>
+
+    <div class="products-grid">
+      <!-- LOVE ME ME -->
+      <div class="product-card card-love reveal reveal-delay-1">
+        <img class="product-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_pink_front1_1.png" alt="LOVE ME ME" style="object-fit:contain; object-position:center; background:transparent;">
+        <span class="card-number">01</span>
+        <span class="card-accent">Love Me Me</span>
+        <h3 class="card-name">LOVE<br>ME ME</h3>
+        <p class="card-tagline">近づいたとき、気づいてほしい香り。<br>すれ違った瞬間の、ズルい残り香。</p>
+        <div class="card-notes">
+          <div class="card-note-row">
+            <span class="note-label">Top</span>
+            <span class="note-val">Bergamot · Orange · Peach</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Mid</span>
+            <span class="note-val">Orchid · Rose · Jasmine</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Last</span>
+            <span class="note-val">Musk · Amber</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">
+            ¥999
+            <span>30ml · 税込</span>
+          </div>
+          <a href="/love-me-me" class="card-btn">詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- HUG ME ME -->
+      <div class="product-card card-hug reveal reveal-delay-2">
+        <img class="product-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_Green_front1_3.png" alt="HUG ME ME" style="object-fit:contain; object-position:center; background:transparent;">
+        <span class="card-number">02</span>
+        <span class="card-accent">Hug Me Me</span>
+        <h3 class="card-name">HUG<br>ME ME</h3>
+        <p class="card-tagline">抱きしめたくなる、やさしい温もり。<br>バニラ＆ムスクの甘い余韻。</p>
+        <div class="card-notes">
+          <div class="card-note-row">
+            <span class="note-label">Top</span>
+            <span class="note-val">Lemon · Tangerine</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Mid</span>
+            <span class="note-val">Orchid · Lily of the Valley</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Last</span>
+            <span class="note-val">Musk · Sandalwood · Vanilla</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">
+            ¥999
+            <span>30ml · 税込</span>
+          </div>
+          <a href="/hug-me-me" class="card-btn">詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- KISS ME ME -->
+      <div class="product-card card-kiss reveal reveal-delay-3">
+        <img class="product-img" src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/LOVE_ME_ME_purple_front1_1.png" alt="KISS ME ME" style="object-fit:contain; object-position:center; background:transparent;">
+        <span class="card-number">03</span>
+        <span class="card-accent">Kiss Me Me</span>
+        <h3 class="card-name">KISS<br>ME ME</h3>
+        <p class="card-tagline">すれ違う瞬間に残る、<br>フルーティーで可憐な香り。</p>
+        <div class="card-notes">
+          <div class="card-note-row">
+            <span class="note-label">Top</span>
+            <span class="note-val">Apple · Raspberry</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Mid</span>
+            <span class="note-val">Orchid · Gardenia · Freesia</span>
+          </div>
+          <div class="card-note-row">
+            <span class="note-label">Last</span>
+            <span class="note-val">Musk · Amber · Wood</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">
+            ¥999
+            <span>30ml · 税込</span>
+          </div>
+          <a href="/kiss-me-me" class="card-btn">詳細を見る →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE GALLERY -->
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--black);">
+    <div style="position:relative; overflow:hidden; aspect-ratio:3/4;">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/Tiby_tokyo_subway_kiss_meme.png"
+           alt="Date" style="width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
+           onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(245,240,238,0.9);display:block;margin-bottom:4px;">すれ違う瞬間</span>
+        <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,238,0.5);">Commute</span>
+      </div>
+    </div>
+    <div style="position:relative; overflow:hidden; aspect-ratio:3/4;">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_cafe_hug_meme_lunch_after.png"
+           alt="Cafe" style="width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
+           onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(245,240,238,0.9);display:block;margin-bottom:4px;">ひとりの午後</span>
+        <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,238,0.5);">Daily</span>
+      </div>
+    </div>
+    <div style="position:relative; overflow:hidden; aspect-ratio:3/4;">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/kiss_me_me_restaurant.jpg"
+           alt="Restaurant" style="width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
+           onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(245,240,238,0.9);display:block;margin-bottom:4px;">特別な夜</span>
+        <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,238,0.5);">Night Out</span>
+      </div>
+    </div>
+    <div style="position:relative; overflow:hidden; aspect-ratio:3/4;">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/love-me-me-scene-weekend.png"
+           alt="Weekend" style="width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);"
+           onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:24px 20px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:rgba(245,240,238,0.9);display:block;margin-bottom:4px;">お出かけの日</span>
+        <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,238,0.5);">Weekend</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRAND STORY -->
+  <section id="story">
+    <div class="story-visual">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_lovememe_hairperfume_12_hero.jpg" 
+           alt="TIBY" 
+           style="width:100%; height:100%; object-fit:cover; object-position:center;">
+      <div class="story-overlay"></div>
+    </div>
+    <div class="story-content">
+      <p class="section-label">Brand Story</p>
+      <blockquote class="story-quote reveal">
+        "香水ほどキメすぎたくない日も、<br>
+        <em style="font-style:italic; color: var(--love);">"なんか今日、髪いい匂い"</em><br>
+        って思わせたい。"
+      </blockquote>
+      <p class="story-body reveal reveal-delay-1">
+        TIBYは、さりげなく香りたいすべての人のために生まれたヘアパフューム。<br>
+        強すぎず、弱すぎない——ちょうどいい香りが、あなたの日常に溶け込む。<br><br>
+        動くたびにふわっと広がり、近づいたときだけ気づく。<br>
+        それが、TIBYのズルい秘密。
+      </p>
+      <a href="https://tiby.me" class="story-link reveal reveal-delay-2" target="_blank">
+        香り診断を試す →
+      </a>
+    </div>
+  </section>
+
+  <!-- WHERE TO BUY -->
+  <section id="where">
+    <p class="section-label reveal">Where to buy</p>
+    <h2 class="where-title reveal">どこで買えるの？</h2>
+    <p class="where-sub reveal reveal-delay-1">
+      全国のドン・キホーテとオンラインで販売中。
+    </p>
+
+    <div class="where-grid">
+      <div class="where-card reveal reveal-delay-1">
+        <div class="where-card-icon">🏪</div>
+        <h3 class="where-card-title">ドン・キホーテ</h3>
+        <p class="where-card-desc">
+          全国約250店舗にてお取り扱い中。<br>
+          実際に手に取って試せます。<br>
+          コスメ・ヘアケアコーナーをご確認ください。
+        </p>
+        <a href="https://tiby.me/stores" class="where-card-link" target="_blank">店舗を探す →</a>
+      </div>
+      <div class="where-card reveal reveal-delay-2">
+        <div class="where-card-icon">📦</div>
+        <h3 class="where-card-title">オンライン購入</h3>
+        <p class="where-card-desc">
+          このページから直接ご注文いただけます。<br>
+          クレジットカード決済対応。<br>
+          全国送料一律・最短翌日お届け。
+        </p>
+        <a href="#products" class="where-card-link">商品を選ぶ →</a>
+      </div>
+    </div>
+
+    <a href="https://tiby.me" class="where-quiz-cta reveal" target="_blank">
+      ✦ &nbsp; 自分に合う香りを診断する
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">TIBY</div>
+        <div class="footer-tagline">香水が決めすぎるけど、これはズルい。</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="#products">LOVE ME ME</a>
+          <a href="#products">HUG ME ME</a>
+          <a href="#products">KISS ME ME</a>
+        </div>
+        <div class="footer-col">
+          <h4>Brand</h4>
+          <a href="#story">About TIBY</a>
+          <a href="https://tiby.me" target="_blank">香り診断</a>
+          <a href="https://tiby.me" target="_blank">レイヤリングラボ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <a href="#where">店舗情報</a>
+          <a href="#">特定商取引法</a>
+          <a href="#">プライバシーポリシー</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Giant Korea Co., Ltd. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── CURSOR ──
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .product-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '60px';
+        ring.style.height = '60px';
+        ring.style.borderColor = 'rgba(245,240,238,0.6)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(245,240,238,0.4)';
+      });
+    });
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // ── NAV BLEND on scroll ──
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        nav.style.mixBlendMode = 'normal';
+        nav.style.background = 'rgba(10,10,10,0.85)';
+        nav.style.backdropFilter = 'blur(12px)';
+        nav.style.borderBottom = '1px solid rgba(245,240,238,0.05)';
+      } else {
+        nav.style.mixBlendMode = 'difference';
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.borderBottom = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
