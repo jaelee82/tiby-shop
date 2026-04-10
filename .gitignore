@@ -1,0 +1,11 @@
+# 생성된 이미지 (용량이 크므로 git에 포함하지 않음)
+nukki_images/
+concept_images/
+
+# 환경 변수 / API 키
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
