@@ -1,0 +1,1535 @@
+[
+  {
+    "code": 1,
+    "name": "府中店",
+    "name_display": "府中店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 4,
+    "name": "木更津店",
+    "name_display": "木更津店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 5,
+    "name": "幕張店",
+    "name_display": "幕張店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 6,
+    "name": "浜野店",
+    "name_display": "浜野店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 8,
+    "name": "新宿店",
+    "name_display": "新宿店",
+    "sub_area": "東京C",
+    "region": "関東"
+  },
+  {
+    "code": 10,
+    "name": "環八世田谷店",
+    "name_display": "環八世田谷店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 20,
+    "name": "千葉中央店",
+    "name_display": "千葉中央店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 26,
+    "name": "横須賀店",
+    "name_display": "横須賀店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 30,
+    "name": "小平店",
+    "name_display": "小平店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 33,
+    "name": "川口新井宿店",
+    "name_display": "川口新井宿店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 37,
+    "name": "ピカソ国分寺店",
+    "name_display": "ピカソ国分寺店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 53,
+    "name": "青戸店",
+    "name_display": "青戸店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 56,
+    "name": "戸塚原宿店",
+    "name_display": "戸塚原宿店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 57,
+    "name": "京都南インター店",
+    "name_display": "京都南インター店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 61,
+    "name": "中野駅前店",
+    "name_display": "中野駅前店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 74,
+    "name": "パウSBS通り店",
+    "name_display": "パウSBS通り店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 75,
+    "name": "住之江公園店",
+    "name_display": "住之江公園店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 81,
+    "name": "伊勢崎店",
+    "name_display": "伊勢崎店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 83,
+    "name": "パウつちうらきた店",
+    "name_display": "パウつちうらきた店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 86,
+    "name": "上本町店",
+    "name_display": "上本町店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 87,
+    "name": "パウ石切店",
+    "name_display": "パウ石切店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 88,
+    "name": "楽市街道名古屋店",
+    "name_display": "楽市街道名古屋店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 90,
+    "name": "D_Plaza大分店",
+    "name_display": "D_Plaza大分店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 97,
+    "name": "MEGA新安城店",
+    "name_display": "MEGA新安城店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 100,
+    "name": "黒崎店",
+    "name_display": "黒崎店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 110,
+    "name": "道頓堀店",
+    "name_display": "道頓堀店",
+    "sub_area": "関西E",
+    "region": "関西"
+  },
+  {
+    "code": 115,
+    "name": "桜ノ宮店",
+    "name_display": "桜ノ宮店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 117,
+    "name": "沼津店",
+    "name_display": "沼津店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 120,
+    "name": "川中島店",
+    "name_display": "川中島店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 122,
+    "name": "横浜西口店",
+    "name_display": "横浜西口店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 125,
+    "name": "MEGA仙台台原店",
+    "name_display": "MEGA仙台台原店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 126,
+    "name": "東所沢店",
+    "name_display": "東所沢店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 129,
+    "name": "南松本店",
+    "name_display": "南松本店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 133,
+    "name": "倉敷店",
+    "name_display": "倉敷店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 139,
+    "name": "岡山下中野店",
+    "name_display": "岡山下中野店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 141,
+    "name": "河口湖インター店",
+    "name_display": "河口湖インター店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 151,
+    "name": "入間店",
+    "name_display": "入間店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 152,
+    "name": "函館七重浜店",
+    "name_display": "函館七重浜店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 153,
+    "name": "小倉店",
+    "name_display": "小倉店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 154,
+    "name": "青森観光通り店",
+    "name_display": "青森観光通り店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 155,
+    "name": "MEGA春日部店",
+    "name_display": "MEGA春日部店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 156,
+    "name": "千葉ニュータウン店",
+    "name_display": "千葉ニュータウン店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 157,
+    "name": "所沢宮本町店",
+    "name_display": "所沢宮本町店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 159,
+    "name": "姫路RIOS店",
+    "name_display": "姫路RIOS店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 163,
+    "name": "MEGA名古屋本店",
+    "name_display": "MEGA名古屋本店",
+    "sub_area": "東海B",
+    "region": "中部"
+  },
+  {
+    "code": 164,
+    "name": "泉佐野店",
+    "name_display": "泉佐野店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 165,
+    "name": "草津店",
+    "name_display": "草津店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 167,
+    "name": "六丁の目店",
+    "name_display": "六丁の目店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 169,
+    "name": "OUTLET館",
+    "name_display": "OUTLET館",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 170,
+    "name": "MEGA四街道店",
+    "name_display": "MEGA四街道店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 171,
+    "name": "溝ノ口駅前店",
+    "name_display": "溝ノ口駅前店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 172,
+    "name": "MEGA三郷店",
+    "name_display": "MEGA三郷店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 173,
+    "name": "MEGA北鴻巣店",
+    "name_display": "MEGA北鴻巣店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 174,
+    "name": "水戸店",
+    "name_display": "水戸店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 176,
+    "name": "MEGA柏崎店",
+    "name_display": "MEGA柏崎店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 177,
+    "name": "MEGA旭川店",
+    "name_display": "MEGA旭川店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 178,
+    "name": "佐世保店",
+    "name_display": "佐世保店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 180,
+    "name": "緑店",
+    "name_display": "緑店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 186,
+    "name": "MEGA浜松可美店",
+    "name_display": "MEGA浜松可美店",
+    "sub_area": "東海A",
+    "region": "中部"
+  },
+  {
+    "code": 188,
+    "name": "松山店",
+    "name_display": "松山店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 189,
+    "name": "福山店",
+    "name_display": "福山店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 192,
+    "name": "MEGA上水戸店",
+    "name_display": "MEGA上水戸店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 195,
+    "name": "MEGA西帯広店",
+    "name_display": "MEGA西帯広店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 196,
+    "name": "MEGA黒磯店",
+    "name_display": "MEGA黒磯店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 203,
+    "name": "ラパーク瑞江店",
+    "name_display": "ラパーク瑞江店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 208,
+    "name": "中目黒本店",
+    "name_display": "中目黒本店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 209,
+    "name": "MEGA本八幡店",
+    "name_display": "MEGA本八幡店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 212,
+    "name": "MEGA成東店",
+    "name_display": "MEGA成東店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 214,
+    "name": "二俣川店",
+    "name_display": "二俣川店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 215,
+    "name": "MEGA蓮田店",
+    "name_display": "MEGA蓮田店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 216,
+    "name": "蒲田駅前店",
+    "name_display": "蒲田駅前店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 217,
+    "name": "宮崎店",
+    "name_display": "宮崎店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 229,
+    "name": "MEGA函館店",
+    "name_display": "MEGA函館店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 230,
+    "name": "長崎屋岸和田店",
+    "name_display": "長崎屋岸和田店",
+    "sub_area": "関西C",
+    "region": "関西"
+  },
+  {
+    "code": 235,
+    "name": "MEGA宇都宮店",
+    "name_display": "MEGA宇都宮店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 237,
+    "name": "MEGA桐生店",
+    "name_display": "MEGA桐生店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 239,
+    "name": "船橋南口店",
+    "name_display": "船橋南口店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 261,
+    "name": "MEGA草加店",
+    "name_display": "MEGA草加店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 264,
+    "name": "八戸店",
+    "name_display": "八戸店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 266,
+    "name": "MEGA宇治店",
+    "name_display": "MEGA宇治店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 268,
+    "name": "小樽店",
+    "name_display": "小樽店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 270,
+    "name": "MEGA神戸本店",
+    "name_display": "MEGA神戸本店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 278,
+    "name": "中洲店",
+    "name_display": "中洲店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 280,
+    "name": "上田店",
+    "name_display": "上田店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 286,
+    "name": "盛岡上堂店",
+    "name_display": "盛岡上堂店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 290,
+    "name": "鹿児島宇宿店",
+    "name_display": "鹿児島宇宿店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 291,
+    "name": "ガーデン前橋店",
+    "name_display": "ガーデン前橋店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 296,
+    "name": "MEGA長浜店",
+    "name_display": "MEGA長浜店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 298,
+    "name": "MEGA四日市店",
+    "name_display": "MEGA四日市店",
+    "sub_area": "東海D",
+    "region": "中部"
+  },
+  {
+    "code": 299,
+    "name": "MEGA岐阜瑞穂店",
+    "name_display": "MEGA岐阜瑞穂店",
+    "sub_area": "東海B",
+    "region": "中部"
+  },
+  {
+    "code": 303,
+    "name": "大日店",
+    "name_display": "大日店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 304,
+    "name": "山形嶋南店",
+    "name_display": "山形嶋南店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 305,
+    "name": "下関長府店",
+    "name_display": "下関長府店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 306,
+    "name": "MEGA上越インター店",
+    "name_display": "MEGA上越インター店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 308,
+    "name": "MEGA紀の川店",
+    "name_display": "MEGA紀の川店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 315,
+    "name": "MEGA武蔵小金井駅前店",
+    "name_display": "MEGA武蔵小金井駅前店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 316,
+    "name": "丸亀店",
+    "name_display": "丸亀店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 318,
+    "name": "弘前店",
+    "name_display": "弘前店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 321,
+    "name": "吉祥寺駅前店",
+    "name_display": "吉祥寺駅前店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 322,
+    "name": "MEGAうるま店",
+    "name_display": "MEGAうるま店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 325,
+    "name": "MEGA東久留米店",
+    "name_display": "MEGA東久留米店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 326,
+    "name": "浅草店",
+    "name_display": "浅草店",
+    "sub_area": "東京C",
+    "region": "関東"
+  },
+  {
+    "code": 329,
+    "name": "MEGA菊陽店",
+    "name_display": "MEGA菊陽店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 333,
+    "name": "三田店",
+    "name_display": "三田店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 334,
+    "name": "北上尾ＰＡＰＡ店",
+    "name_display": "北上尾PAPA店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 338,
+    "name": "SING橋本駅前店",
+    "name_display": "SING橋本駅前店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 340,
+    "name": "大宮東口店",
+    "name_display": "大宮東口店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 341,
+    "name": "MEGA茨木店",
+    "name_display": "MEGA茨木店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 343,
+    "name": "後楽園店",
+    "name_display": "後楽園店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 344,
+    "name": "MEGA新横浜店",
+    "name_display": "MEGA新横浜店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 347,
+    "name": "伊勢佐木町店",
+    "name_display": "伊勢佐木町店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 348,
+    "name": "栄本店",
+    "name_display": "栄本店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 349,
+    "name": "石巻街道矢本店",
+    "name_display": "石巻街道矢本店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 350,
+    "name": "MEGA深江橋店",
+    "name_display": "MEGA深江橋店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 352,
+    "name": "MEGA春日井店",
+    "name_display": "MEGA春日井店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 353,
+    "name": "MEGAル・パーク三川店",
+    "name_display": "MEGAル・パーク三川店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 355,
+    "name": "天文館店",
+    "name_display": "天文館店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 360,
+    "name": "MEGA松原店",
+    "name_display": "MEGA松原店",
+    "sub_area": "関西C",
+    "region": "関西"
+  },
+  {
+    "code": 364,
+    "name": "香芝インター店",
+    "name_display": "香芝インター店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 370,
+    "name": "MEGA東松山店",
+    "name_display": "MEGA東松山店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 372,
+    "name": "MEGA箕面店",
+    "name_display": "MEGA箕面店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 373,
+    "name": "道頓堀御堂筋店",
+    "name_display": "道頓堀御堂筋店",
+    "sub_area": "関西E",
+    "region": "関西"
+  },
+  {
+    "code": 374,
+    "name": "ピカソ横須賀中央店",
+    "name_display": "ピカソ横須賀中央店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 386,
+    "name": "MEGA仙台富谷店",
+    "name_display": "MEGA仙台富谷店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 387,
+    "name": "山崎店",
+    "name_display": "山崎店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 388,
+    "name": "MEGA立川店",
+    "name_display": "MEGA立川店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 389,
+    "name": "岡山駅前店",
+    "name_display": "岡山駅前店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 392,
+    "name": "ピカソ南行徳駅前店",
+    "name_display": "ピカソ南行徳駅前店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 393,
+    "name": "MEGA筑紫野インター店",
+    "name_display": "MEGA筑紫野インター店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 399,
+    "name": "天理店",
+    "name_display": "天理店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 400,
+    "name": "藤枝店",
+    "name_display": "藤枝店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 407,
+    "name": "MEGA大森山王店",
+    "name_display": "MEGA大森山王店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 409,
+    "name": "大和店",
+    "name_display": "大和店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 411,
+    "name": "南熊本店",
+    "name_display": "南熊本店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 412,
+    "name": "藤沢駅南口店",
+    "name_display": "藤沢駅南口店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 413,
+    "name": "アクロスモール泉北店",
+    "name_display": "アクロスモール泉北店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 415,
+    "name": "川西店",
+    "name_display": "川西店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 417,
+    "name": "MEGA東海名和店",
+    "name_display": "MEGA東海名和店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 418,
+    "name": "京都アバンティ店",
+    "name_display": "京都アバンティ店",
+    "sub_area": "関西E",
+    "region": "関西"
+  },
+  {
+    "code": 424,
+    "name": "境大橋店",
+    "name_display": "境大橋店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 425,
+    "name": "MEGA福知山店",
+    "name_display": "MEGA福知山店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 428,
+    "name": "MEGA八千代16号店",
+    "name_display": "MEGA八千代16号店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 431,
+    "name": "MEGA環七梅島店",
+    "name_display": "MEGA環七梅島店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 436,
+    "name": "MEGA豊郷店",
+    "name_display": "MEGA豊郷店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 437,
+    "name": "MEGA那珂川店",
+    "name_display": "MEGA那珂川店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 440,
+    "name": "小山駅前店",
+    "name_display": "小山駅前店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 441,
+    "name": "MEGA津桜橋店",
+    "name_display": "MEGA津桜橋店",
+    "sub_area": "東海D",
+    "region": "中部"
+  },
+  {
+    "code": 450,
+    "name": "MEGA名護店",
+    "name_display": "MEGA名護店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 454,
+    "name": "MEGA山科店",
+    "name_display": "MEGA山科店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 455,
+    "name": "長岡川崎店",
+    "name_display": "長岡川崎店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 461,
+    "name": "福岡天神本店",
+    "name_display": "福岡天神本店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 462,
+    "name": "MEGA延岡店",
+    "name_display": "MEGA延岡店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 464,
+    "name": "日野インター店",
+    "name_display": "日野インター店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 466,
+    "name": "MEGA姫路広畑店",
+    "name_display": "MEGA姫路広畑店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 470,
+    "name": "MEGA霧島隼人店",
+    "name_display": "MEGA霧島隼人店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 473,
+    "name": "MEGAUNY座間店",
+    "name_display": "MEGAUNY座間店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 480,
+    "name": "MEGAUNY中里店",
+    "name_display": "MEGAUNY中里店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 487,
+    "name": "MEGAUNY伊勢崎東店",
+    "name_display": "MEGAUNY伊勢崎東店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 488,
+    "name": "MEGA鶴見中央店",
+    "name_display": "MEGA鶴見中央店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 495,
+    "name": "UNY大桑店",
+    "name_display": "UNY大桑店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 503,
+    "name": "仙台駅西口本店",
+    "name_display": "仙台駅西口本店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 510,
+    "name": "ピカソ川崎銀柳街店",
+    "name_display": "ピカソ川崎銀柳街店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 513,
+    "name": "MEGA港山下総本店",
+    "name_display": "MEGA港山下総本店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 516,
+    "name": "須賀川店",
+    "name_display": "須賀川店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 517,
+    "name": "下通り店",
+    "name_display": "下通り店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 518,
+    "name": "ららぽーと立川立飛店",
+    "name_display": "ららぽーと立川立飛店",
+    "sub_area": "神奈川A",
+    "region": "関東"
+  },
+  {
+    "code": 519,
+    "name": "MEGA八代店",
+    "name_display": "MEGA八代店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 525,
+    "name": "MEGAUNY岐阜店",
+    "name_display": "MEGAUNY岐阜店",
+    "sub_area": "東海B",
+    "region": "中部"
+  },
+  {
+    "code": 527,
+    "name": "今治店",
+    "name_display": "今治店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 528,
+    "name": "MEGAUNY市原店",
+    "name_display": "MEGAUNY市原店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 531,
+    "name": "MEGAUNY富士吉原店",
+    "name_display": "MEGAUNY富士吉原店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 536,
+    "name": "MEGAUNY本庄店",
+    "name_display": "MEGAUNY本庄店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 537,
+    "name": "MEGAUNY掛川店",
+    "name_display": "MEGAUNY掛川店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 555,
+    "name": "MEGA札幌狸小路本店",
+    "name_display": "MEGA札幌狸小路本店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 562,
+    "name": "MEGAUNY榛原店",
+    "name_display": "MEGAUNY榛原店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 570,
+    "name": "MEGAUNY大覚寺店",
+    "name_display": "MEGAUNY大覚寺店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 579,
+    "name": "栃木平柳店",
+    "name_display": "栃木平柳店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 600,
+    "name": "大田原店",
+    "name_display": "大田原店",
+    "sub_area": "北関東A",
+    "region": "関東"
+  },
+  {
+    "code": 602,
+    "name": "行田持田インター店",
+    "name_display": "行田持田インター店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 606,
+    "name": "五反田東口店",
+    "name_display": "五反田東口店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 607,
+    "name": "福島店",
+    "name_display": "福島店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 615,
+    "name": "大須店",
+    "name_display": "大須店",
+    "sub_area": "東海C",
+    "region": "中部"
+  },
+  {
+    "code": 616,
+    "name": "新発田店",
+    "name_display": "新発田店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 617,
+    "name": "川越東口店",
+    "name_display": "川越東口店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 618,
+    "name": "五所川原店",
+    "name_display": "五所川原店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 620,
+    "name": "松山大街道店",
+    "name_display": "松山大街道店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 621,
+    "name": "MEGA豊見城店",
+    "name_display": "MEGA豊見城店",
+    "sub_area": "九州C",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 625,
+    "name": "MEGA武蔵浦和店",
+    "name_display": "MEGA武蔵浦和店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 626,
+    "name": "ｾﾌﾞﾝﾊﾟｰｸｱﾘｵ柏店",
+    "name_display": "セブンパークアリオ柏店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 627,
+    "name": "十日町店",
+    "name_display": "十日町店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 635,
+    "name": "錦糸町北口店",
+    "name_display": "錦糸町北口店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 640,
+    "name": "利府店",
+    "name_display": "利府店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 645,
+    "name": "小倉魚町店",
+    "name_display": "小倉魚町店",
+    "sub_area": "九州A",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 648,
+    "name": "古川店",
+    "name_display": "古川店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 651,
+    "name": "京橋店",
+    "name_display": "京橋店",
+    "sub_area": "関西D",
+    "region": "関西"
+  },
+  {
+    "code": 660,
+    "name": "MEGA成増店",
+    "name_display": "MEGA成増店",
+    "sub_area": "関東",
+    "region": "関東"
+  },
+  {
+    "code": 661,
+    "name": "千葉ﾎﾟｰﾄﾀｳﾝ店",
+    "name_display": "千葉ポートタウン店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 669,
+    "name": "鶴ヶ島店",
+    "name_display": "鶴ヶ島店",
+    "sub_area": "埼玉",
+    "region": "関東"
+  },
+  {
+    "code": 672,
+    "name": "京急蒲田店",
+    "name_display": "京急蒲田店",
+    "sub_area": "神奈川B",
+    "region": "関東"
+  },
+  {
+    "code": 674,
+    "name": "彦根店",
+    "name_display": "彦根店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 675,
+    "name": "MEGAｶﾞｰﾗﾀｳﾝ青森店",
+    "name_display": "MEGAガーラタウン青森店",
+    "sub_area": "東北A",
+    "region": "東北"
+  },
+  {
+    "code": 676,
+    "name": "貝塚店",
+    "name_display": "貝塚店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 681,
+    "name": "太田店",
+    "name_display": "太田店",
+    "sub_area": "北関東B",
+    "region": "関東"
+  },
+  {
+    "code": 684,
+    "name": "新静岡駅前店",
+    "name_display": "新静岡駅前店",
+    "sub_area": "中部A",
+    "region": "中部"
+  },
+  {
+    "code": 686,
+    "name": "大分中央町店",
+    "name_display": "大分中央町店",
+    "sub_area": "九州B",
+    "region": "九州・沖縄"
+  },
+  {
+    "code": 688,
+    "name": "安曇野ｲﾝﾀｰ店",
+    "name_display": "安曇野インター店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 691,
+    "name": "佐久平店",
+    "name_display": "佐久平店",
+    "sub_area": "信越",
+    "region": "中部"
+  },
+  {
+    "code": 692,
+    "name": "調布駅前店",
+    "name_display": "調布駅前店",
+    "sub_area": "東京A",
+    "region": "関東"
+  },
+  {
+    "code": 693,
+    "name": "小松島ﾙﾋﾟｱ店",
+    "name_display": "小松島ルピア店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 694,
+    "name": "田無駅前店",
+    "name_display": "田無駅前店",
+    "sub_area": "東京B",
+    "region": "関東"
+  },
+  {
+    "code": 698,
+    "name": "館山店",
+    "name_display": "館山店",
+    "sub_area": "千葉",
+    "region": "関東"
+  },
+  {
+    "code": 699,
+    "name": "浜松志都呂店",
+    "name_display": "浜松志都呂店",
+    "sub_area": "東海A",
+    "region": "中部"
+  },
+  {
+    "code": 705,
+    "name": "千歳店",
+    "name_display": "千歳店",
+    "sub_area": "北海道",
+    "region": "北海道"
+  },
+  {
+    "code": 707,
+    "name": "京都伏見店",
+    "name_display": "京都伏見店",
+    "sub_area": "関西A",
+    "region": "関西"
+  },
+  {
+    "code": 714,
+    "name": "りんくう店",
+    "name_display": "りんくう店",
+    "sub_area": "関西B",
+    "region": "関西"
+  },
+  {
+    "code": 718,
+    "name": "八丁堀西店",
+    "name_display": "八丁堀西店",
+    "sub_area": "中四国",
+    "region": "中国・四国"
+  },
+  {
+    "code": 719,
+    "name": "ｷﾗｷﾗﾄﾞﾝｷ仙台長町店",
+    "name_display": "キラキラドンキ仙台長町店",
+    "sub_area": "東北B",
+    "region": "東北"
+  },
+  {
+    "code": 720,
+    "name": "高山店",
+    "name_display": "高山店",
+    "sub_area": "東海B",
+    "region": "中部"
+  },
+  {
+    "code": 733,
+    "name": "ｿﾗﾄﾞﾝｷPOPUP店",
+    "name_display": "ソラドンキPOPUP店",
+    "sub_area": "東京C",
+    "region": "関東"
+  }
+]
