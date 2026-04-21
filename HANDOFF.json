@@ -1,0 +1,206 @@
+{
+  "handoff_meta": {
+    "created_at": "2026-04-21",
+    "from_session": "Claude Code (Opus 4.7) — jaelee82 sandbox (shadow repo)",
+    "purpose": "Hand off to another workspace (Cowork) to finish deploying /stores, /quiz, /layering pages to the live tiby.shop site.",
+    "summary_one_line": "Code is fully written and pushed to a shadow repo; need someone with write access to the real repo jaelee1982/tiby-shop-v2 to copy the files in and push to master."
+  },
+
+  "context": {
+    "live_site": "https://tiby.shop",
+    "real_github_owner": "jaelee1982",
+    "real_github_repo": "tiby-shop-v2",
+    "real_github_url_assumed": "https://github.com/jaelee1982/tiby-shop-v2",
+    "shadow_repo_where_code_is": "https://github.com/jaelee82/tiby-shop",
+    "shadow_branch_with_commits": "master (fast-forwarded) and claude/remote-control-setup-V8mL9",
+    "commits_on_shadow_master": [
+      "a51eba3 add /quiz and /layering pages",
+      "aab0a7f add /stores page with 219 Don Quijote locations, fix tiby.me links",
+      "1a5f569 add CNAME (pre-existing)"
+    ],
+    "hosting_signals": {
+      "dns": "tiby.shop -> 75.2.60.5 (appears to be Netlify/CloudFront edge IP)",
+      "netlify_deploy_emails_in_inbox_last_7d": 0,
+      "repo_has_netlify_toml": false,
+      "repo_has_github_actions_workflow": false,
+      "note": "Live hosting config was not directly verifiable from the sandbox. Netlify dashboard needs to be checked manually to confirm where tiby.shop deploys from."
+    }
+  },
+
+  "what_was_blocked": [
+    {
+      "id": "B1",
+      "title": "Could not fetch tiby.me or tiby.shop directly",
+      "reason": "Sandbox egress proxy blocks arbitrary hosts. HTTP responses like `host_not_allowed` were from the proxy, not from the real servers. Only github.com-style hosts were whitelisted.",
+      "impact": "Could not read the original tiby.me/stores, /quiz, /layering HTML to port directly."
+    },
+    {
+      "id": "B2",
+      "title": "tiby.me appears to be deprovisioned",
+      "reason": "DNS still points to Netlify but the domain returns 403 host_not_allowed when I tested (even accounting for sandbox proxy, the subdomain guesses like tiby.netlify.app, tibyme.netlify.app all failed).",
+      "impact": "Could not scrape original page content as a fallback."
+    },
+    {
+      "id": "B3",
+      "title": "No Netlify / Supabase / Railway MCP connected",
+      "reason": "Only Gmail, Google Calendar, Google Drive, and GitHub MCPs were available in this session.",
+      "impact": "Could not query a Supabase `stores` table or trigger a Netlify deploy or inspect Netlify site configuration."
+    },
+    {
+      "id": "B4",
+      "title": "GitHub MCP scope was locked to jaelee82/tiby-shop",
+      "reason": "The authenticated MCP user is `jaelee82` (a shadow/bot account with 1 public repo), NOT the user's real `jaelee1982` account. System prompt explicitly restricts: \"Calls targeting repositories outside this list will be denied.\"",
+      "impact": "All pushes went to jaelee82/tiby-shop. Live site at tiby.shop is served from a different repo (jaelee1982/tiby-shop-v2) that I cannot touch.",
+      "evidence": "GitHub MCP get_me returned login=jaelee82. Gmail notifications say 'Hey jaelee1982!'. User confirmed via GitHub Desktop screenshot: real repo is tiby-shop-v2 under jaelee1982."
+    }
+  ],
+
+  "data_sources_used": {
+    "stores_219": {
+      "origin": "Google Drive file `stores/stores.xlsx` (fileId: 1PHhmP0QqIsvYqlEcBVCptCOn9OJZfe51)",
+      "columns_in_source": "店番 (store_code) + 店舗名 (store_name), 219 rows",
+      "region_enrichment": "Cross-referenced each store_code against `sales_data/Tiby在庫あり.xlsx` (fileId: 1vw9uBLDkcpOLxwJOL7TwDurq0hX-4Z16) which had エリア (region) info, then grouped sub-areas into 7 top-level regions"
+    },
+    "layering_456": {
+      "origin": "Google Drive file `layering_guide/output_jp_refined.csv` (fileId: 1AJng8iNQHeSz01aVGKdTGariBOPUWP7s)",
+      "content": "456 famous perfumes from 89 brands with scent axes (sweet/woody/fresh/musk 1-4), longevity, intensity, main_family, top/mid/base notes",
+      "notes": "Encoding was dual (ASCII + some Japanese col that was corrupted in transit) so the Japanese description column was dropped; English fields came through clean"
+    },
+    "brand_reference": {
+      "origin": "Google Drive `TIBY_Brand_Guidelines_v2.0.docx의 사본` (fileId: 1lX2-vEY5N7vNUz1ODsbnc3Qoz9FTHpFZiPASN6LDVzA)",
+      "used_for": "Fragrance profiles, tagline, TPO mapping, persona; drove the quiz copy and the TIBY 3-SKU entries in layering.json"
+    }
+  },
+
+  "deliverables": {
+    "branch_to_use": "master on jaelee82/tiby-shop (tip a51eba3)",
+    "files_added": [
+      {
+        "path": "stores/index.html",
+        "size_bytes": 42001,
+        "description": "Stores page with 219 stores embedded inline as JSON. Region tabs (All / 北海道 / 東北 / 関東 / 中部 / 関西 / 中国・四国 / 九州・沖縄). Text search over name/code/sub_area. Grouped render with store code + display name.",
+        "self_contained": true,
+        "url_when_deployed": "tiby.shop/stores"
+      },
+      {
+        "path": "quiz/index.html",
+        "size_bytes": 22726,
+        "description": "3-question scent quiz. Each answer carries weights { love, hug, kiss }; total score picks the recommended SKU. Shows recommended SKU with tagline/notes and the other two as runner-ups.",
+        "self_contained": true,
+        "url_when_deployed": "tiby.shop/quiz",
+        "questions": [
+          "Q1: どんな日に、香りを纏いたいですか？ (Date / Daily / Night / Weekend)",
+          "Q2: どんな雰囲気が、あなたの魅力？ (Sweet / Warm / Confident / Clean)",
+          "Q3: 好きな香りは、どれに近い？ (Floral Fruity / Sweet Woody / Fruity Floral / Fresh Citrus)"
+        ]
+      },
+      {
+        "path": "layering/index.html",
+        "size_bytes": 23057,
+        "description": "Fragrance matching tool. Fetches /data/layering.json. Searchable + family-filtered list of 456 perfumes. Clicking one opens a modal with scent profile bars, top/mid/base notes, and a compatibility score against each TIBY SKU.",
+        "self_contained": false,
+        "depends_on": "/data/layering.json",
+        "url_when_deployed": "tiby.shop/layering",
+        "matching_algorithm": "Match score = max(0, 100 - diff*8 + family_bonus) where diff = sum(|frag[axis] - sku[axis]|) over sweet/woody/fresh/musk; +5 if main_family_simple matches. Highest-scoring SKU gets the ★ BEST MATCH badge."
+      },
+      {
+        "path": "data/stores.json",
+        "size_bytes": 32652,
+        "description": "Source-of-truth for stores (redundant since stores/index.html embeds it inline, but kept for future maintenance). Schema: [{ code:int, name:str, name_display:str, sub_area:str, region:str }]"
+      },
+      {
+        "path": "data/layering.json",
+        "size_bytes": 132714,
+        "description": "Fragrance DB + TIBY 3-SKU profiles. Schema: { tiby: [...], fragrances: [...], meta: {...} }. layering/index.html fetches this at runtime."
+      }
+    ],
+    "files_modified": [
+      {
+        "path": "index.html",
+        "change": "Replaced https://tiby.me/stores, /quiz, /layering links with same-origin /stores, /quiz, /layering. Fixed one footer link that pointed bare tiby.me → now /layering for 'レイヤリングラボ' label. Removed target=\"_blank\" for same-origin links.",
+        "lines_changed": 14
+      },
+      {
+        "path": "love-me-me.html",
+        "change": "Same tiby.me → same-origin replacements.",
+        "lines_changed": 14
+      },
+      {
+        "path": "hug-me-me.html",
+        "change": "Same tiby.me → same-origin replacements.",
+        "lines_changed": 14
+      },
+      {
+        "path": "kiss-me-me.html",
+        "change": "Same tiby.me → same-origin replacements.",
+        "lines_changed": 14
+      }
+    ]
+  },
+
+  "design_decisions": {
+    "url_scheme": "Clean URLs via folder/index.html (so /stores, /quiz, /layering work without .html extension, which also works fine on GitHub Pages + Netlify + most static hosts).",
+    "design_language": "Reused the existing tiby.shop design: --black #0a0a0a, Cormorant Garamond for display, Josefin Sans for UI, Zen Maru Gothic for Japanese body. Brand colors --love #F4A0A0 / --hug #7EC8B5 / --kiss #A78BBF. CSS variables so the future Claude Tiby Design System can re-skin without touching structure.",
+    "why_embedded_stores_but_not_layering": "stores.json is 25KB (small enough to inline, avoids a fetch on first paint). layering.json is 130KB with 456 entries, so it's fetched async so the initial page loads fast.",
+    "no_framework": "Everything is vanilla HTML/CSS/JS, no build step. Works as-is on any static host.",
+    "known_trade_offs": [
+      "Layering match score is a simple distance heuristic over 4 axes, not a full fragrance ontology. Good enough for a recommendation UI, will need tuning if the brand wants strict perfumery rules.",
+      "Quiz questions and weights were derived from brand guidelines TPO mapping (Date→LOVE, Daily→HUG, Night→KISS) and emotion mapping (Act1/Act2/Act3). The original tiby.me/quiz logic couldn't be recovered; user said it was 'simple logic, easy to re-implement' — this is a clean rewrite in that spirit.",
+      "HUG ME ME box still says 'チョコレート' externally, but per brand guidelines that wording is being retired in favor of 'シトラス&バニラ'. Current copy follows the guidelines."
+    ]
+  },
+
+  "how_to_finish_deploying": {
+    "goal": "Get the code from jaelee82/tiby-shop (shadow) onto the master branch of whatever repo actually feeds tiby.shop (assumed jaelee1982/tiby-shop-v2).",
+    "option_1_git_cli": {
+      "steps": [
+        "cd <local clone of jaelee1982/tiby-shop-v2>",
+        "git remote add shadow https://github.com/jaelee82/tiby-shop.git",
+        "git fetch shadow master",
+        "git cherry-pick aab0a7f a51eba3   # only the two new commits; alternatively: git merge shadow/master --allow-unrelated-histories",
+        "git push origin master",
+        "git remote remove shadow  # cleanup"
+      ]
+    },
+    "option_2_github_desktop_file_copy": {
+      "steps": [
+        "File → Clone Repository → URL: https://github.com/jaelee82/tiby-shop  → clone to a temp folder",
+        "In Explorer: copy the 6 items (stores/, quiz/, layering/, data/, index.html, love-me-me.html, hug-me-me.html, kiss-me-me.html) from the temp folder",
+        "Paste them into the local folder of tiby-shop-v2, overwriting when prompted",
+        "Back in GitHub Desktop with tiby-shop-v2 selected, the changes show up. Commit with message: 'add /stores, /quiz, /layering pages + fix tiby.me links' → Push origin"
+      ]
+    },
+    "option_3_cross_repo_pr": {
+      "condition": "Only works if jaelee82/tiby-shop is a fork of jaelee1982/tiby-shop-v2 on GitHub (unconfirmed).",
+      "steps": [
+        "Visit https://github.com/jaelee82/tiby-shop",
+        "Pull requests → New pull request → base: jaelee1982/tiby-shop-v2 master, compare: jaelee82/tiby-shop master",
+        "If the UI allows the cross-repo compare, create PR and merge."
+      ]
+    },
+    "post_deploy_verification": [
+      "Open https://tiby.shop/stores — should show region-tabbed grid of 219 stores.",
+      "Open https://tiby.shop/quiz — should show the 'Start' screen; going through 3 questions should land on a SKU.",
+      "Open https://tiby.shop/layering — should load a search grid after a brief fetch; clicking a fragrance opens the modal with TIBY scores.",
+      "Spot-check that index.html header nav + product page CTA buttons no longer point to tiby.me."
+    ]
+  },
+
+  "open_questions_for_next_session": [
+    "Is jaelee1982/tiby-shop-v2 actually the repo that feeds tiby.shop? Confirm by checking Netlify (app.netlify.com → site claiming tiby.shop → Build & deploy → repo).",
+    "Should tiby.me redirect to tiby.shop? Right now tiby.me seems dead; a redirect would preserve external links (in Powder Room campaigns, Kirindo emails, etc.). If yes, this needs DNS + Netlify config, not repo code.",
+    "Do you want to persist store data to Supabase so store lists can be updated without code deploys? If so, the stores/ page can switch to fetching from Supabase instead of embedded JSON.",
+    "Quiz recommendation logic vs the original tiby.me/quiz — does the current mapping match your intent? Easy to re-tune (just edit the `w` weights in quiz/index.html)."
+  ],
+
+  "session_artifacts_in_shadow_sandbox_only": {
+    "note": "These exist only in the sandbox and the jaelee82/tiby-shop repo; if Cowork needs them, pull from the shadow repo or regenerate.",
+    "paths": [
+      "/home/user/tiby-shop/stores/index.html",
+      "/home/user/tiby-shop/quiz/index.html",
+      "/home/user/tiby-shop/layering/index.html",
+      "/home/user/tiby-shop/data/stores.json",
+      "/home/user/tiby-shop/data/layering.json"
+    ]
+  }
+}
