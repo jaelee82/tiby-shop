@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layering — TIBY Hair Perfume</title>
+  <meta name="description" content="あなたの好きな香水に、TIBYを重ねる。456種の香水データベースから、あなたに合うTIBYを見つけよう。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-black: #111111;
+      --dark: #161616;
+      --love: #F4A0A0;
+      --hug: #7EC8B5;
+      --kiss: #A78BBF;
+      --white: #f5f0ee;
+      --white-dim: rgba(245,240,238,0.5);
+      --white-faint: rgba(245,240,238,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--white-faint);
+    }
+    .nav-logo img { height: 28px; width: auto; filter: brightness(10); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+    /* HERO */
+    .page-hero {
+      padding: 160px 48px 80px;
+      text-align: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 60%, rgba(244,160,160,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 75% 30%, rgba(167,139,191,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(126,200,181,0.04) 0%, transparent 60%);
+    }
+    .page-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 24px;
+    }
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .page-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--love) 0%, var(--kiss) 50%, var(--hug) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-sub {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 13px;
+      color: var(--white-dim);
+      line-height: 2;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* CONTROLS */
+    .controls {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 48px 0;
+    }
+    .search-wrap { position: relative; margin-bottom: 24px; }
+    .search-input {
+      width: 100%;
+      padding: 18px 24px 18px 52px;
+      background: var(--off-black);
+      border: 1px solid var(--white-faint);
+      color: var(--white);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .search-input:focus { border-color: rgba(245,240,238,0.3); }
+    .search-input::placeholder { color: rgba(245,240,238,0.3); }
+    .search-icon {
+      position: absolute;
+      left: 20px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--white-dim);
+      pointer-events: none;
+    }
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .filter-chip {
+      padding: 10px 18px;
+      background: transparent;
+      border: 1px solid var(--white-faint);
+      color: var(--white-dim);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .filter-chip:hover { color: var(--white); border-color: rgba(245,240,238,0.3); }
+    .filter-chip.active {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    /* LIST */
+    .fragrances-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px 80px;
+    }
+    .fragrances-meta {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 24px;
+    }
+    .fragrances-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .frag-card {
+      background: var(--off-black);
+      padding: 20px 22px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .frag-card:hover {
+      background: var(--dark);
+      transform: translateY(-2px);
+    }
+    .frag-brand {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.4);
+    }
+    .frag-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+    .frag-family-tag {
+      display: inline-block;
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 3px 10px;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      border: 1px solid var(--white-faint);
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 80px 24px;
+      text-align: center;
+      color: var(--white-dim);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 13px;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 20px;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--off-black);
+      max-width: 900px;
+      width: 100%;
+      border: 1px solid var(--white-faint);
+    }
+    .modal-header {
+      padding: 36px 40px 24px;
+      border-bottom: 1px solid var(--white-faint);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: transparent;
+      border: none;
+      color: var(--white-dim);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .modal-close:hover { color: var(--white); }
+    .modal-brand {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 8px;
+    }
+    .modal-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .modal-family {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+      color: var(--white-dim);
+    }
+
+    .modal-body { padding: 32px 40px 40px; }
+    .modal-section { margin-bottom: 40px; }
+    .modal-section:last-child { margin-bottom: 0; }
+    .modal-section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 16px;
+    }
+
+    .profile-bars { display: flex; flex-direction: column; gap: 10px; }
+    .profile-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 30px;
+      align-items: center;
+      gap: 16px;
+    }
+    .profile-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .profile-bar {
+      height: 4px;
+      background: var(--white-faint);
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-bar-fill {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--love), var(--kiss), var(--hug));
+      transform-origin: left;
+      transform: scaleX(var(--fill, 0));
+      transition: transform 0.6s cubic-bezier(0.23,1,0.32,1);
+    }
+    .profile-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      color: var(--white);
+      text-align: right;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .notes-col {
+      padding: 16px;
+      background: var(--dark);
+    }
+    .notes-col-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.4);
+      margin-bottom: 10px;
+    }
+    .notes-list {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+      color: var(--white);
+      line-height: 1.8;
+    }
+
+    .tiby-match {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 8px;
+    }
+    .tiby-card {
+      padding: 24px 20px;
+      background: var(--dark);
+      text-align: center;
+      border-top: 3px solid var(--accent, var(--love));
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .tiby-card.best::after {
+      content: '★ BEST MATCH';
+      position: absolute;
+      top: 6px; right: 8px;
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+    .tiby-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+    .tiby-card-tag {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 11px;
+      color: var(--white-dim);
+      line-height: 1.7;
+    }
+    .tiby-card-score {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .tiby-card-score-unit {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-top: -6px;
+    }
+    .tiby-card-advice {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 11px;
+      line-height: 1.8;
+      color: var(--white-dim);
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--white-faint);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 64px 48px 40px;
+      background: var(--black);
+      border-top: 1px solid var(--white-faint);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 6px;
+    }
+    .footer-copy { font-size: 10px; letter-spacing: 1px; color: rgba(245,240,238,0.3); }
+    .footer-nav { display: flex; gap: 24px; }
+    .footer-nav a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+    }
+    .footer-nav a:hover { color: var(--white); }
+
+    .loading {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--white-dim);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 20px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 10px; letter-spacing: 1.5px; }
+      .page-hero { padding: 120px 20px 60px; }
+      .controls, .fragrances-section { padding-left: 20px; padding-right: 20px; }
+      .fragrances-grid { grid-template-columns: 1fr 1fr; }
+      .modal-header, .modal-body { padding-left: 24px; padding-right: 24px; }
+      .notes-grid { grid-template-columns: 1fr; }
+      .tiby-match { grid-template-columns: 1fr; }
+      footer { padding: 48px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_logo_pink_transparent.png" alt="TIBY">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#products">Shop</a></li>
+      <li><a href="/#story">About</a></li>
+      <li><a href="/stores">Stores</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/layering" class="active">Layering</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <p class="page-label">Layering Lab</p>
+    <h1 class="page-title">あなたの好きな香水に、<br><em>TIBYを重ねる。</em></h1>
+    <p class="page-sub">
+      お気に入りの香水を選ぶと、相性の良いTIBYがわかります。<br>
+      香水 ¥5,000〜 の上に、¥999で新しい香りの物語を。
+    </p>
+  </section>
+
+  <!-- CONTROLS -->
+  <section class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="ブランド・香水名で検索（例: Chanel, Dior, Jo Malone）" autocomplete="off">
+    </div>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-family="all">All</button>
+      <button class="filter-chip" data-family="floral">Floral</button>
+      <button class="filter-chip" data-family="woody">Woody</button>
+      <button class="filter-chip" data-family="fresh">Fresh</button>
+      <button class="filter-chip" data-family="oriental">Oriental</button>
+      <button class="filter-chip" data-family="gourmand">Gourmand</button>
+      <button class="filter-chip" data-family="musk">Musk</button>
+      <button class="filter-chip" data-family="leather">Leather</button>
+    </div>
+  </section>
+
+  <!-- LIST -->
+  <section class="fragrances-section">
+    <div class="fragrances-meta" id="countMeta">Loading...</div>
+    <div class="fragrances-grid" id="fragGrid">
+      <div class="loading">データを読み込み中...</div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-close" id="modalClose" aria-label="閉じる">✕</button>
+        <div class="modal-brand" id="mBrand"></div>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-family" id="mFamily"></div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label">香りプロファイル</div>
+          <div class="profile-bars" id="mProfile"></div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-label">香調ノート</div>
+          <div class="notes-grid">
+            <div class="notes-col">
+              <div class="notes-col-label">Top</div>
+              <div class="notes-list" id="mTop"></div>
+            </div>
+            <div class="notes-col">
+              <div class="notes-col-label">Mid</div>
+              <div class="notes-list" id="mMid"></div>
+            </div>
+            <div class="notes-col">
+              <div class="notes-col-label">Base</div>
+              <div class="notes-list" id="mBase"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-label">相性の良いTIBY</div>
+          <div class="tiby-match" id="mTiby"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">TIBY</div>
+      <div class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/stores">Stores</a>
+        <a href="/quiz">Quiz</a>
+        <a href="/layering">Layering</a>
+      </div>
+      <span class="footer-copy">© 2026 Giant Korea Co., Ltd.</span>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const PROFILE_AXES = [
+        { key: 'sweet', label: 'Sweet' },
+        { key: 'woody', label: 'Woody' },
+        { key: 'fresh', label: 'Fresh' },
+        { key: 'musk',  label: 'Musk'  },
+      ];
+
+      let state = {
+        tiby: [],
+        fragrances: [],
+        query: '',
+        family: 'all',
+      };
+
+      const el = (id) => document.getElementById(id);
+      const grid = el('fragGrid');
+      const countMeta = el('countMeta');
+      const searchInput = el('searchInput');
+      const filterRow = el('filterRow');
+      const modal = el('modal');
+      const modalClose = el('modalClose');
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        }[c]));
+      }
+
+      function compatScore(frag, sku) {
+        // Lower distance = higher compat. Max diff per axis = 3, 4 axes = 12 max.
+        let diff = 0;
+        for (const ax of PROFILE_AXES) {
+          diff += Math.abs((frag[ax.key]||0) - (sku[ax.key]||0));
+        }
+        // Family bonus: same main_family_simple +5
+        const familyBonus = frag.family_simple === sku.family_simple ? 5 : 0;
+        const raw = Math.max(0, 100 - (diff * 8) + familyBonus);
+        return Math.min(100, Math.round(raw));
+      }
+
+      function adviceFor(frag, sku, score) {
+        if (score >= 85) return `香調が近く、${sku.name}を重ねるとブレることなく奥行きが生まれます。`;
+        if (score >= 70) return `補完的な香り。${sku.name}がベースに温もりと残香を加えます。`;
+        if (score >= 55) return `コントラストのある組み合わせ。${sku.name}が新しい表情を引き出します。`;
+        return `意外性のある挑戦的な組み合わせ。${sku.name}で香りを立ち上げてみて。`;
+      }
+
+      function renderGrid() {
+        const q = state.query.trim().toLowerCase();
+        const filtered = state.fragrances.filter(f => {
+          if (state.family !== 'all' && f.family_simple !== state.family) return false;
+          if (!q) return true;
+          return (f.brand + ' ' + f.name).toLowerCase().includes(q);
+        });
+
+        countMeta.textContent = `${filtered.length} / ${state.fragrances.length} fragrances`;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '<div class="empty-state">該当する香水が見つかりませんでした。</div>';
+          return;
+        }
+
+        // Show up to 200 at a time for perf
+        const shown = filtered.slice(0, 200);
+        grid.innerHTML = shown.map((f, i) => `
+          <div class="frag-card" data-idx="${state.fragrances.indexOf(f)}">
+            <span class="frag-brand">${esc(f.brand)}</span>
+            <span class="frag-name">${esc(f.name)}</span>
+            <span class="frag-family-tag">${esc(f.family_simple)}</span>
+          </div>
+        `).join('') + (filtered.length > 200 ? `<div class="empty-state" style="grid-column:1/-1;padding:32px 0;">さらに ${filtered.length - 200} 件あります。絞り込みに検索をお使いください。</div>` : '');
+      }
+
+      function openModal(frag) {
+        el('mBrand').textContent = frag.brand;
+        el('mName').textContent = frag.name;
+        el('mFamily').textContent = `${frag.family} · ${frag.gender}`;
+
+        // Profile bars
+        const profileHtml = PROFILE_AXES.map(ax => {
+          const v = frag[ax.key] || 0;
+          const pct = Math.min(1, v / 4);
+          return `
+            <div class="profile-row">
+              <span class="profile-label">${ax.label}</span>
+              <div class="profile-bar"><div class="profile-bar-fill" style="--fill:${pct}"></div></div>
+              <span class="profile-value">${v}</span>
+            </div>
+          `;
+        }).join('');
+        el('mProfile').innerHTML = profileHtml;
+
+        el('mTop').textContent  = (frag.top  || []).join(' · ') || '—';
+        el('mMid').textContent  = (frag.mid  || []).join(' · ') || '—';
+        el('mBase').textContent = (frag.base || []).join(' · ') || '—';
+
+        // TIBY match
+        const scored = state.tiby.map(sku => ({
+          sku, score: compatScore(frag, sku)
+        })).sort((a, b) => b.score - a.score);
+
+        const best = scored[0];
+        el('mTiby').innerHTML = scored.map(({sku, score}) => `
+          <div class="tiby-card${sku.id === best.sku.id ? ' best' : ''}" style="--accent:${sku.color}">
+            <div class="tiby-card-name">${esc(sku.sku)}</div>
+            <div class="tiby-card-tag">${esc(sku.tagline_jp)}</div>
+            <div class="tiby-card-score">${score}</div>
+            <div class="tiby-card-score-unit">Match Score</div>
+            <div class="tiby-card-advice">${esc(adviceFor(frag, sku, score))}</div>
+          </div>
+        `).join('');
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      // Events
+      grid.addEventListener('click', e => {
+        const card = e.target.closest('.frag-card');
+        if (!card) return;
+        const idx = +card.dataset.idx;
+        const frag = state.fragrances[idx];
+        if (frag) openModal(frag);
+      });
+
+      let debounce;
+      searchInput.addEventListener('input', e => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+          state.query = e.target.value;
+          renderGrid();
+        }, 150);
+      });
+
+      filterRow.addEventListener('click', e => {
+        const btn = e.target.closest('.filter-chip');
+        if (!btn) return;
+        filterRow.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.family = btn.dataset.family;
+        renderGrid();
+      });
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // Load data
+      fetch('/data/layering.json')
+        .then(r => r.json())
+        .then(data => {
+          state.tiby = data.tiby;
+          state.fragrances = data.fragrances;
+          renderGrid();
+        })
+        .catch(err => {
+          grid.innerHTML = `<div class="empty-state">データの読み込みに失敗しました。<br>${esc(String(err))}</div>`;
+        });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz — TIBY Hair Perfume</title>
+  <meta name="description" content="3つの質問に答えて、あなたに合うTIBYを見つけよう。LOVE/HUG/KISSから、今日の気分にピッタリの香りを診断。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-black: #111111;
+      --dark: #161616;
+      --love: #F4A0A0;
+      --hug: #7EC8B5;
+      --kiss: #A78BBF;
+      --white: #f5f0ee;
+      --white-dim: rgba(245,240,238,0.5);
+      --white-faint: rgba(245,240,238,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--white-faint);
+    }
+    .nav-logo img { height: 28px; width: auto; filter: brightness(10); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+    /* CANVAS */
+    .quiz-canvas {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 60%, rgba(244,160,160,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 75% 30%, rgba(167,139,191,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(126,200,181,0.04) 0%, transparent 60%);
+    }
+
+    .quiz-wrap {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    /* INTRO */
+    .intro {
+      text-align: center;
+    }
+    .page-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 24px;
+    }
+    .intro-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .intro-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--love) 0%, var(--kiss) 50%, var(--hug) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .intro-sub {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 14px;
+      color: var(--white-dim);
+      line-height: 2;
+      margin-bottom: 48px;
+    }
+    .intro-start {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 48px;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .intro-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(245,240,238,0.1);
+    }
+    .intro-meta {
+      margin-top: 32px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,240,238,0.3);
+    }
+
+    /* PROGRESS */
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .progress-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .progress-bar {
+      flex: 1;
+      margin: 0 24px;
+      height: 1px;
+      background: var(--white-faint);
+      position: relative;
+    }
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--love), var(--kiss), var(--hug));
+      transform-origin: left;
+      transform: scaleX(var(--p, 0));
+      transition: transform 0.6s cubic-bezier(0.23,1,0.32,1);
+    }
+    .progress-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    /* QUESTION */
+    .question {
+      display: none;
+    }
+    .question.active { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .q-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 16px;
+    }
+    .q-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.35;
+      margin-bottom: 40px;
+    }
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .q-option {
+      text-align: left;
+      padding: 24px 28px;
+      background: var(--off-black);
+      border: 1px solid var(--white-faint);
+      color: var(--white);
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .q-option:hover {
+      background: var(--dark);
+      border-color: rgba(245,240,238,0.25);
+      transform: translateX(4px);
+    }
+    .q-option-emoji {
+      font-size: 28px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .q-option-text {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .q-option-hint {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: rgba(245,240,238,0.3);
+      text-transform: uppercase;
+    }
+
+    /* RESULT */
+    .result { display: none; }
+    .result.active { display: block; animation: fadeIn 0.7s ease; }
+
+    .result-hero {
+      text-align: center;
+      padding: 40px 0 56px;
+      border-bottom: 1px solid var(--white-faint);
+      margin-bottom: 48px;
+    }
+    .result-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 16px;
+    }
+    .result-sku-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 10vw, 120px);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .result-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+    .result-desc {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 14px;
+      color: var(--white-dim);
+      line-height: 2;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .result-notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+    .result-note {
+      padding: 20px 18px;
+      background: var(--off-black);
+    }
+    .result-note-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .result-note-val {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 12px;
+      line-height: 1.8;
+      color: var(--white);
+    }
+
+    .result-cta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      border: 1px solid;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white-faint);
+    }
+    .cta-btn-primary {
+      background: var(--accent);
+      color: var(--black);
+      border-color: var(--accent);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(245,240,238,0.4);
+    }
+    .cta-btn-primary:hover { opacity: 0.9; }
+
+    .result-others {
+      margin-top: 56px;
+      text-align: center;
+    }
+    .others-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 20px;
+    }
+    .others-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .other-card {
+      background: var(--off-black);
+      padding: 20px 24px;
+      text-align: left;
+      border-top: 2px solid var(--o-accent, var(--love));
+      text-decoration: none;
+      color: var(--white);
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .other-card:hover { background: var(--dark); }
+    .other-sku {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: var(--o-accent);
+    }
+    .other-tag {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 11px;
+      color: var(--white-dim);
+      margin-top: 4px;
+    }
+
+    footer {
+      padding: 48px 48px 32px;
+      border-top: 1px solid var(--white-faint);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      letter-spacing: 6px;
+    }
+    .footer-copy { font-size: 10px; letter-spacing: 1px; color: rgba(245,240,238,0.3); }
+    .footer-nav { display: flex; gap: 24px; }
+    .footer-nav a {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--white-dim); text-decoration: none;
+    }
+    .footer-nav a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 20px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 10px; letter-spacing: 1.5px; }
+      .quiz-canvas { padding: 100px 20px 60px; }
+      .result-notes { grid-template-columns: 1fr; }
+      .others-grid { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="https://cdn.shopify.com/s/files/1/0948/3173/9160/files/tiby_logo_pink_transparent.png" alt="TIBY">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#products">Shop</a></li>
+      <li><a href="/#story">About</a></li>
+      <li><a href="/stores">Stores</a></li>
+      <li><a href="/quiz" class="active">Quiz</a></li>
+      <li><a href="/layering">Layering</a></li>
+    </ul>
+  </nav>
+
+  <main class="quiz-canvas">
+    <div class="quiz-wrap" id="quizWrap">
+
+      <!-- INTRO -->
+      <div class="intro" id="intro">
+        <p class="page-label">Scent Quiz</p>
+        <h1 class="intro-title">あなたの気分に、<br><em>どのTIBY？</em></h1>
+        <p class="intro-sub">
+          3つの質問に答えるだけ。<br>
+          今日のあなたにピッタリの香りを見つけましょう。
+        </p>
+        <button class="intro-start" id="startBtn">
+          Start — 香り診断を始める
+        </button>
+        <p class="intro-meta">約 30 seconds · 3 questions</p>
+      </div>
+
+      <!-- QUESTIONS (inserted by JS) -->
+      <div id="progressBar" style="display:none;">
+        <div class="progress">
+          <span class="progress-label">Question</span>
+          <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+          <span class="progress-count" id="progCount">1 / 3</span>
+        </div>
+      </div>
+      <div id="questions"></div>
+
+      <!-- RESULT -->
+      <div class="result" id="result">
+        <div class="result-hero">
+          <p class="result-eyebrow">Your Scent</p>
+          <h1 class="result-sku-name" id="rName">LOVE ME ME</h1>
+          <p class="result-tagline" id="rTagline">ときめきの始まり</p>
+          <p class="result-desc" id="rDesc"></p>
+        </div>
+
+        <div class="result-notes">
+          <div class="result-note">
+            <div class="result-note-label">Top</div>
+            <div class="result-note-val" id="rTop"></div>
+          </div>
+          <div class="result-note">
+            <div class="result-note-label">Mid</div>
+            <div class="result-note-val" id="rMid"></div>
+          </div>
+          <div class="result-note">
+            <div class="result-note-label">Base</div>
+            <div class="result-note-val" id="rBase"></div>
+          </div>
+        </div>
+
+        <div class="result-cta">
+          <a href="#" id="rProductLink" class="cta-btn cta-btn-primary">
+            商品を見る →
+          </a>
+          <a href="/stores" class="cta-btn">店舗を探す</a>
+          <button class="cta-btn" id="retakeBtn">もう一度診断</button>
+        </div>
+
+        <div class="result-others">
+          <div class="others-label">他の2つも気になる？</div>
+          <div class="others-grid" id="rOthers"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">TIBY</div>
+      <div class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/stores">Stores</a>
+        <a href="/quiz">Quiz</a>
+        <a href="/layering">Layering</a>
+      </div>
+      <span class="footer-copy">© 2026 Giant Korea Co., Ltd.</span>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // SKU data
+      const SKUS = {
+        love: {
+          id: 'love',
+          name: 'LOVE ME ME',
+          color: '#F4A0A0',
+          tagline: 'ときめきの始まり',
+          href: '/love-me-me.html',
+          desc: '出会いの瞬間の、甘くきらめくフローラル。ベルガモットとピーチのきらめき、ジャスミンとローズのロマンティックな中心に、アンバーのやさしい余韻。初めて好きになった日のような香り。',
+          top: 'Bergamot · Orange · Peach',
+          mid: 'Orchid · Rose · Jasmine · Lily · Freesia · Violet',
+          base: 'Musk · Amber',
+        },
+        hug: {
+          id: 'hug',
+          name: 'HUG ME ME',
+          color: '#7EC8B5',
+          tagline: 'そばにいる温もり',
+          href: '/hug-me-me.html',
+          desc: '抱きしめたくなる、やさしい温もり。レモンとタンジェリンの甘く濃厚なシトラスから、咲き誇るフローラルへ。バニラとサンダルウッドの甘い吐息が、一日を通してそっと寄り添います。',
+          top: 'Lemon · Tangerine',
+          mid: 'Orchid · Lily of the Valley · Heliotrope · Gardenia',
+          base: 'Musk · Sandalwood · Vanilla · Amber',
+        },
+        kiss: {
+          id: 'kiss',
+          name: 'KISS ME ME',
+          color: '#A78BBF',
+          tagline: 'もっと近づきたい',
+          href: '/kiss-me-me.html',
+          desc: 'すれ違う瞬間に残る、ジューシーで可憐な香り。アップルとラズベリーのジューシーなトップから、ガーデニアとフリージアの可憐なフローラルへ。ムスクとウッドのやわらかなスエードの余韻で、近づきたくなる距離感。',
+          top: 'Apple · Raspberry',
+          mid: 'Orchid · Gardenia · Freesia · Lily of the Valley · Cyclamen',
+          base: 'Musk · Amber · Wood',
+        },
+      };
+
+      // Quiz questions. Each option has weights for { love, hug, kiss }.
+      const QUESTIONS = [
+        {
+          eyebrow: 'Question 01',
+          title: 'どんな日に、<br>香りを纏いたいですか？',
+          options: [
+            { emoji: '💗', text: 'デートや特別な約束の日',    hint: 'Date',    w: { love: 3, hug: 0, kiss: 2 } },
+            { emoji: '🌿', text: '普段の通勤や、おうち時間',   hint: 'Daily',   w: { love: 1, hug: 3, kiss: 0 } },
+            { emoji: '✨', text: '夜のおでかけ、特別なディナー', hint: 'Night',   w: { love: 0, hug: 1, kiss: 3 } },
+            { emoji: '☕', text: '休日のカフェ、気ままな午後',   hint: 'Weekend', w: { love: 2, hug: 2, kiss: 1 } },
+          ],
+        },
+        {
+          eyebrow: 'Question 02',
+          title: 'どんな雰囲気が、<br>あなたの魅力？',
+          options: [
+            { emoji: '🌸', text: 'ときめき・ピュアな',   hint: 'Sweet',     w: { love: 3, hug: 1, kiss: 1 } },
+            { emoji: '🫶', text: 'やさしい・包まれる',   hint: 'Warm',      w: { love: 1, hug: 3, kiss: 0 } },
+            { emoji: '💋', text: '大胆・セクシー',       hint: 'Confident', w: { love: 0, hug: 0, kiss: 3 } },
+            { emoji: '🌼', text: '自然体・クリーン',     hint: 'Clean',     w: { love: 2, hug: 2, kiss: 1 } },
+          ],
+        },
+        {
+          eyebrow: 'Question 03',
+          title: '好きな香りは、<br>どれに近い？',
+          options: [
+            { emoji: '🍑', text: 'フローラル＆フルーティー',     hint: 'Floral Fruity',  w: { love: 3, hug: 0, kiss: 2 } },
+            { emoji: '🌰', text: 'バニラやウッディの甘い香り',   hint: 'Sweet Woody',    w: { love: 0, hug: 3, kiss: 1 } },
+            { emoji: '🍎', text: 'ジューシー＆ロマンティック',   hint: 'Fruity Floral',  w: { love: 1, hug: 0, kiss: 3 } },
+            { emoji: '🍋', text: 'シトラス・フレッシュ',         hint: 'Fresh Citrus',   w: { love: 2, hug: 3, kiss: 0 } },
+          ],
+        },
+      ];
+
+      const el = (id) => document.getElementById(id);
+      let scores = { love: 0, hug: 0, kiss: 0 };
+      let currentQ = 0;
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        }[c]));
+      }
+
+      function renderQuestion(index) {
+        const q = QUESTIONS[index];
+        const html = `
+          <div class="question active" data-q="${index}">
+            <p class="q-eyebrow">${esc(q.eyebrow)}</p>
+            <h2 class="q-title">${q.title}</h2>
+            <div class="q-options">
+              ${q.options.map((opt, i) => `
+                <button class="q-option" data-idx="${i}">
+                  <span class="q-option-emoji">${opt.emoji}</span>
+                  <span class="q-option-text">${esc(opt.text)}</span>
+                  <span class="q-option-hint">${esc(opt.hint)}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        el('questions').innerHTML = html;
+
+        // Progress bar
+        el('progressBar').style.display = 'block';
+        el('progCount').textContent = `${index + 1} / ${QUESTIONS.length}`;
+        el('progFill').style.setProperty('--p', (index) / QUESTIONS.length);
+
+        // Click handler
+        el('questions').querySelectorAll('.q-option').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const optIdx = +btn.dataset.idx;
+            const weights = q.options[optIdx].w;
+            scores.love += weights.love;
+            scores.hug  += weights.hug;
+            scores.kiss += weights.kiss;
+            next();
+          });
+        });
+      }
+
+      function next() {
+        currentQ++;
+        if (currentQ < QUESTIONS.length) {
+          renderQuestion(currentQ);
+        } else {
+          showResult();
+        }
+      }
+
+      function showResult() {
+        // Determine winner
+        const entries = Object.entries(scores);
+        entries.sort((a, b) => b[1] - a[1]);
+        const winnerId = entries[0][0];
+        const winner = SKUS[winnerId];
+
+        // Progress full
+        el('progFill').style.setProperty('--p', 1);
+        // Hide questions, show result
+        el('questions').innerHTML = '';
+        el('progressBar').style.display = 'none';
+        el('result').classList.add('active');
+
+        // Fill result
+        document.documentElement.style.setProperty('--accent', winner.color);
+        el('result').style.setProperty('--accent', winner.color);
+        el('rName').textContent = winner.name;
+        el('rName').style.color = winner.color;
+        el('rTagline').textContent = winner.tagline;
+        el('rDesc').textContent = winner.desc;
+        el('rTop').textContent = winner.top;
+        el('rMid').textContent = winner.mid;
+        el('rBase').textContent = winner.base;
+        el('rProductLink').href = winner.href;
+        el('rProductLink').style.background = winner.color;
+        el('rProductLink').style.borderColor = winner.color;
+
+        // Others
+        const others = entries.slice(1).map(([id]) => SKUS[id]);
+        el('rOthers').innerHTML = others.map(sku => `
+          <a class="other-card" href="${esc(sku.href)}" style="--o-accent:${sku.color}">
+            <div class="other-sku">${esc(sku.name)}</div>
+            <div class="other-tag">${esc(sku.tagline)}</div>
+          </a>
+        `).join('');
+
+        // Scroll to top of result
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function start() {
+        scores = { love: 0, hug: 0, kiss: 0 };
+        currentQ = 0;
+        el('intro').style.display = 'none';
+        el('result').classList.remove('active');
+        renderQuestion(0);
+      }
+
+      el('startBtn').addEventListener('click', start);
+      el('retakeBtn').addEventListener('click', () => {
+        el('result').classList.remove('active');
+        el('intro').style.display = 'block';
+        el('progressBar').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
